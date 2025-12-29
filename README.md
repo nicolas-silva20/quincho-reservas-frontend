@@ -159,9 +159,9 @@ El sitio está optimizado para:
 
 ### Login de Administradores
 
-**Usuarios de prueba:**
-- **Usuario:** Nicolas Silva | **Contraseña:** Argentina132
-- **Usuario:** Juan Silva | **Contraseña:** 231279
+**Acceso restringido:** Contacta a los administradores del sistema para obtener credenciales.
+
+**Nota de seguridad:** Las credenciales de administrador no están disponibles públicamente por razones de seguridad.
 
 El sistema usa JWT almacenado en `sessionStorage` con expiración de 24 horas.
 

@@ -17,9 +17,8 @@ Desde aquí podés:
 ### Para Administradores:
 **Panel Admin:** https://silver-croissant-fb9e1d.netlify.app/admin-login.html
 
-**Usuarios activos:**
-- Usuario: Nicolas Silva | Contraseña: Argentina132
-- Usuario: Juan Silva | Contraseña: 231279
+**Acceso restringido:**
+Solicita las credenciales de acceso a los administradores del sistema. Por razones de seguridad, las credenciales son confidenciales y solo están disponibles para personal autorizado.
 
 ---
 

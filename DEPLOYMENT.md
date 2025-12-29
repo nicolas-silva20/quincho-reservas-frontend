@@ -3,7 +3,7 @@
 ## 📋 Resumen
 
 Este proyecto se despliega en dos plataformas gratuitas:
-- **Frontend**: Netlify (HTML/CSS/JS est\u00e1tico)
+- **Frontend**: Netlify (HTML/CSS/JS estático)
 - **Backend + MySQL**: Railway (Spring Boot + Base de datos)
 
 ---
@@ -72,19 +72,19 @@ git push -u origin main
 
 1. Ve a [railway.app](https://railway.app)
 2. Haz clic en "Start a New Project"
-3. Inicia sesi\u00f3n con tu cuenta de GitHub
+2. Inicia sesión con tu cuenta de GitHub
 
 ### 2.2 Crear Base de Datos MySQL
 
 1. En Railway, haz clic en **"+ New"** → **"Database"** → **"Add MySQL"**
-2. Railway crear\u00e1 autom\u00e1ticamente la base de datos
+2. Railway creará automáticamente la base de datos
 3. Anota las credenciales que aparecen en la pesta\u00f1a "Variables"
 
 ### 2.3 Desplegar Backend
 
 1. Haz clic en **"+ New"** → **"GitHub Repo"**
 2. Selecciona tu repositorio `quincho-reservas-backend`
-3. Railway detectar\u00e1 autom\u00e1ticamente que es un proyecto Maven/Spring Boot
+3. Railway detectará automáticamente que es un proyecto Maven/Spring Boot
 
 ### 2.4 Configurar Variables de Entorno
 
@@ -99,7 +99,7 @@ JWT_SECRET=tu-secreto-super-seguro-min-256-bits-cambialo-por-algo-aleatorio
 CORS_ORIGINS=https://tu-app.netlify.app
 ```
 
-**Importante**: Railway te proporciona autom\u00e1ticamente `DATABASE_URL`, `MYSQLUSER`, `MYSQLPASSWORD`, etc. \u00dasalas si est\u00e1n disponibles.
+**Importante**: Railway te proporciona automáticamente `DATABASE_URL`, `MYSQLUSER`, `MYSQLPASSWORD`, etc. Úsalas si están disponibles.
 
 ### 2.5 Crear Tablas en MySQL Railway
 
@@ -149,7 +149,7 @@ En el archivo `scripts/api.js`, l\u00ednea 6-8, reemplaza:
 ```javascript
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:8080/api'
-    : 'https://TU-URL-DE-RAILWAY.up.railway.app/api'; // ← Cambiar aqu\u00ed
+    : 'https://TU-URL-DE-RAILWAY.up.railway.app/api'; // ← Cambiar aquí
 ```
 
 Luego haz commit y push:
@@ -167,8 +167,8 @@ git push
 2. Selecciona **"Deploy with GitHub"**
 3. Busca y selecciona tu repositorio `quincho-reservas-frontend`
 4. Configuraci\u00f3n de build:
-   - **Build command**: (dejar vac\u00edo, es un sitio est\u00e1tico)
-   - **Publish directory**: `/` (ra\u00edz del proyecto)
+   - **Build command**: (dejar vacío, es un sitio estático)
+   - **Publish directory**: `/` (raíz del proyecto)
 5. Haz clic en **"Deploy site"**
 
 ### 3.4 Configurar Dominio Personalizado (Opcional)
@@ -203,13 +203,11 @@ Deber\u00edas ver un JSON con las experiencias.
 1. Abre tu sitio de Netlify: `https://tu-app.netlify.app`
 2. Navega por el sitio
 3. Intenta hacer una reserva
-4. Prueba el login de administrador:
-   - Usuario: `Nicolas Silva`
-   - Contrase\u00f1a: `Argentina132`
+4. Prueba el login de administrador con las credenciales configuradas en la base de datos.
 
 ---
 
-## 🔄 C\u00f3mo Hacer Cambios Despu\u00e9s del Deploy
+## 🔄 Cómo Hacer Cambios Después del Deploy
 
 ### Para el Frontend:
 
@@ -222,7 +220,7 @@ git add .
 git commit -m "Descripci\u00f3n de tus cambios"
 git push
 
-# Netlify desplegar\u00e1 autom\u00e1ticamente en ~30 segundos
+# Netlify desplegará automáticamente en ~30 segundos
 ```
 
 ### Para el Backend:
@@ -236,12 +234,12 @@ git add .
 git commit -m "Descripci\u00f3n de tus cambios"
 git push
 
-# Railway desplegar\u00e1 autom\u00e1ticamente en ~2-3 minutos
+# Railway desplegará automáticamente en ~2-3 minutos
 ```
 
 ---
 
-## 📊 L\u00edmites de las Versiones Gratuitas
+## 📊 Límites de las Versiones Gratuitas
 
 ### Netlify (Frontend):
 - ✅ 100 GB de ancho de banda/mes
@@ -250,14 +248,14 @@ git push
 - ✅ HTTPS gratis
 
 ### Railway (Backend + MySQL):
-- ✅ $5 USD de cr\u00e9dito mensual gratuito
+- ✅ $5 USD de crédito mensual gratuito
 - ✅ Suficiente para ~500 horas/mes de uptime
-- ⚠️  Se apaga despu\u00e9s de inactividad (se reactiva autom\u00e1ticamente)
+- ⚠️  Se apaga después de inactividad (se reactiva automáticamente)
 - ✅ 1 GB de almacenamiento MySQL
 
 ---
 
-## 🆘 Soluci\u00f3n de Problemas
+## 🆘 Solución de Problemas
 
 ### Error CORS:
 - Verifica que `CORS_ORIGINS` en Railway incluya tu URL de Netlify
@@ -269,7 +267,7 @@ git push
 
 ### Login no funciona:
 - Verifica que hayas ejecutado el SQL para crear los usuarios
-- Aseg\u00farate de que `JWT_SECRET` est\u00e9 configurado en Railway
+- Asegúrate de que `JWT_SECRET` esté configurado en Railway
 
 ### Frontend no conecta con Backend:
 - Verifica que la URL en `api.js` sea correcta
@@ -284,12 +282,12 @@ git push
    - JWT secrets
    - Archivos `application-local.properties`
 
-2. **Backup**: Railway hace backups autom\u00e1ticos, pero es buena idea exportar tu base de datos peri\u00f3dicamente
+2. **Backup**: Railway hace backups automáticos, pero es buena idea exportar tu base de datos periódicamente
 
 3. **Monitoreo**: Revisa los logs de Railway regularmente para detectar errores
 
 ---
 
-## 🎉 \u00a1Listo!
+## 🎉 ¡Listo!
 
-Tu aplicaci\u00f3n ahora est\u00e1 en l\u00ednea y accesible desde cualquier lugar. Puedes seguir haciendo cambios localmente y desplegar autom\u00e1ticamente con `git push`.
+Tu aplicación ahora está en línea y accesible desde cualquier lugar. Puedes seguir haciendo cambios localmente y desplegar automáticamente con `git push`.
