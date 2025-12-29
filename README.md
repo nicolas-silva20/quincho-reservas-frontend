@@ -167,10 +167,8 @@ El sistema usa JWT almacenado en `sessionStorage` con expiración de 24 horas.
 
 ## 📖 Documentación Adicional
 
-- 📄 **[DEPLOYMENT.md](DEPLOYMENT.md)** - Guía completa de despliegue
-- 🐛 **[BUGFIXES.md](BUGFIXES.md)** - Registro de bugs resueltos
-- 🧪 **[TEST_RESENAS.md](TEST_RESENAS.md)** - Testing del sistema de reseñas
-- 🎯 **[DEMO_TESTING_RESENAS.md](DEMO_TESTING_RESENAS.md)** - Tutorial de testing paso a paso
+- 📄 **[DEPLOYMENT.md](DEPLOYMENT.md)** - Guía de despliegue y configuración
+- 📖 **[GUIA_CLIENTE.md](GUIA_CLIENTE.md)** - Manual de usuario del sistema
 
 ## 🔗 API Endpoints
 
@@ -205,38 +203,24 @@ El frontend consume estos endpoints del backend:
 
 ## 🤝 Contribuir
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+Este es un proyecto privado desarrollado para El Umbral del Quincho.
 
 ## 📝 Licencia
 
-Este proyecto es privado y pertenece a **El Umbral del Quincho**.
+Proyecto privado © 2025 El Umbral del Quincho
 
-## 👤 Autor
+## 👥 Desarrolladores
 
 **Nicolas Silva & Juan Silva**
 
 - GitHub: [@nicolas-silva20](https://github.com/nicolas-silva20)
-
-## 🙏 Agradecimientos
-
-- Diseño inspirado en plataformas premium de hospitalidad
-- Iconografía de emojis nativos del sistema
-- Tipografías de Google Fonts
-
----
-
-**⭐ Si te gusta el proyecto, dale una estrella en GitHub! ⭐**
+- Proyecto: Sistema de Reservas para Quincho
 
 ---
 
 ## 📧 Contacto
 
-Para consultas sobre el sistema, contactar a:
+Para consultas sobre el sistema:
 
-📧 Email: [TU_EMAIL_AQUI]  
-📱 WhatsApp: [TU_NUMERO_AQUI]  
-🌐 Sitio Web: https://silver-croissant-fb9e1d.netlify.app
+🌐 **Sitio Web:** https://silver-croissant-fb9e1d.netlify.app  
+👨‍💼 **Admin Panel:** https://silver-croissant-fb9e1d.netlify.app/admin-login.html
