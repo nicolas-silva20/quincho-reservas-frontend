@@ -2,12 +2,12 @@
 
 > Plataforma web para gestionar reservas del quincho "El Umbral del Quincho" con experiencias personalizadas, reseñas de clientes y panel de administración.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://silver-croissant-fb9e1d.netlify.app)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://quinchoelumbral.netlify.app)
 
 ## 🌐 Demo en Vivo
 
-- **Sitio Web:** https://silver-croissant-fb9e1d.netlify.app
-- **Panel Admin:** https://silver-croissant-fb9e1d.netlify.app/admin-login.html
+- **Sitio Web:** https://quinchoelumbral.netlify.app
+- **Panel Admin:** https://quinchoelumbral.netlify.app/admin-login.html
 
 ## 📋 Características
 
@@ -222,5 +222,5 @@ Proyecto privado © 2025 El Umbral del Quincho
 
 Para consultas sobre el sistema:
 
-🌐 **Sitio Web:** https://silver-croissant-fb9e1d.netlify.app  
-👨‍💼 **Admin Panel:** https://silver-croissant-fb9e1d.netlify.app/admin-login.html
+🌐 **Sitio Web:** https://quinchoelumbral.netlify.app  
+👨‍💼 **Admin Panel:** https://quinchoelumbral.netlify.app/admin-login.html

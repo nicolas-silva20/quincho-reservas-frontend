@@ -506,7 +506,7 @@ function verDetalle(id) {
  * Mostrar link de reseña existente
  */
 function mostrarLinkResena(token, telefono, nombreCliente) {
-    const link = `https://silver-croissant-fb9e1d.netlify.app/dejar-resena.html?token=${token}`;
+    const link = `https://quinchoelumbral.netlify.app/dejar-resena.html?token=${token}`;
     
     const modalBody = document.getElementById('modal-body');
     modalBody.innerHTML = `
@@ -1121,7 +1121,7 @@ async function marcarComoFinalizada(id) {
         
         if (response.success) {
             const token = response.data.resenaToken;
-            const link = `https://silver-croissant-fb9e1d.netlify.app/dejar-resena.html?token=${token}`;
+            const link = `https://quinchoelumbral.netlify.app/dejar-resena.html?token=${token}`;
             
             // Crear modal personalizado con el link
             const modalBody = document.getElementById('modal-body');
@@ -1180,7 +1180,7 @@ function abrirWhatsApp(telefono, token, nombreCliente) {
     const telefonoLimpio = telefono.replace(/\D/g, '');
     
     // Mensaje personalizado
-    const mensaje = `¡Hola ${nombreCliente}! Gracias por visitarnos en El Umbral del Quincho. 🎉\n\nNos encantaría conocer tu experiencia. Por favor, dejanos tu reseña en el siguiente link:\n\nhttps://silver-croissant-fb9e1d.netlify.app/dejar-resena.html?token=${token}\n\n¡Esperamos verte pronto! 🌟`;
+    const mensaje = `¡Hola ${nombreCliente}! Gracias por visitarnos en El Umbral del Quincho. 🎉\n\nNos encantaría conocer tu experiencia. Por favor, dejanos tu reseña en el siguiente link:\n\nhttps://quinchoelumbral.netlify.app/dejar-resena.html?token=${token}\n\n¡Esperamos verte pronto! 🌟`;
     
     // Codificar el mensaje para URL
     const mensajeCodificado = encodeURIComponent(mensaje);

@@ -7,7 +7,7 @@ Sistema de gestión de reservas para quincho con experiencias personalizadas.
 ## 🌐 Acceso al Sistema
 
 ### Para Clientes:
-**Sitio Web:** https://silver-croissant-fb9e1d.netlify.app
+**Sitio Web:** https://quinchoelumbral.netlify.app
 
 Desde aquí podés:
 - Ver las experiencias disponibles
@@ -15,7 +15,7 @@ Desde aquí podés:
 - Dejar reseñas después de tu visita
 
 ### Para Administradores:
-**Panel Admin:** https://silver-croissant-fb9e1d.netlify.app/admin-login.html
+**Panel Admin:** https://quinchoelumbral.netlify.app/admin-login.html
 
 **Acceso restringido:**
 Solicita las credenciales de acceso a los administradores del sistema. Por razones de seguridad, las credenciales son confidenciales y solo están disponibles para personal autorizado.
