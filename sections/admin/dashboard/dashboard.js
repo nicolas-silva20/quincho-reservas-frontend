@@ -129,10 +129,23 @@ function renderizarPaginacion() {
     if (!paginacionContainer) {
         // Crear contenedor si no existe
         const table = document.getElementById('reservas-table');
+        const tableContainer = document.querySelector('.reservas-table-container');
+        
+        if (!table && !tableContainer) {
+            console.error('No se encontró la tabla ni el contenedor');
+            return;
+        }
+        
         const container = document.createElement('div');
         container.id = 'paginacion';
         container.style.cssText = 'display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 1.5rem; padding: 1rem;';
-        table.parentNode.insertBefore(container, table.nextSibling);
+        
+        // Insertar después de la tabla si existe, sino después del contenedor
+        if (table && table.parentNode) {
+            table.parentNode.insertBefore(container, table.nextSibling);
+        } else if (tableContainer && tableContainer.parentNode) {
+            tableContainer.parentNode.insertBefore(container, tableContainer.nextSibling);
+        }
     }
     
     const container = document.getElementById('paginacion');
