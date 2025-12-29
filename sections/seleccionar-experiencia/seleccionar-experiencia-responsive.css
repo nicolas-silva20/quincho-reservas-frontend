@@ -13,13 +13,15 @@
     }
     
     /* Tabla de precios responsive */
-    .tabla-precios-container {
+    .tabla-precios-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        margin-bottom: 1rem;
     }
     
     .tabla-precios-horarios {
         min-width: 600px;
+        margin-bottom: 0;
     }
     
     .tabla-precios-horarios thead th,
@@ -45,25 +47,26 @@
     }
     
     /* Tabla de precios - scroll hint */
-    .tabla-precios-container {
+    .tabla-precios-wrapper {
         position: relative;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 0.5rem;
     }
     
-    .tabla-precios-container::after {
-        content: '← Deslizá para ver más →';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
+    .tabla-precios-scroll-hint {
+        text-align: center;
         font-size: 11px;
         color: rgba(212, 165, 116, 0.6);
         font-family: var(--font-secondary);
-        padding: 0.5rem;
-        pointer-events: none;
+        font-style: italic;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
     }
     
     .tabla-precios-horarios {
         min-width: 550px;
+        margin-bottom: 0;
     }
     
     /* Extras - responsive grid */
@@ -135,15 +138,28 @@
         margin-bottom: 0.75rem;
     }
     
+    .tabla-precios-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 0;
+    }
+    
     .tabla-precios-horarios {
         min-width: 480px;
         font-size: 12px;
+        margin-bottom: 0;
     }
     
     .tabla-precios-horarios thead th,
     .tabla-precios-horarios tbody td {
         padding: 0.5rem 0.25rem;
         font-size: 11px;
+    }
+    
+    .tabla-precios-scroll-hint {
+        font-size: 10px;
+        margin: 0.5rem 0;
+        display: block;
     }
     
     /* CARRUSEL DE EXPERIENCIAS EN MÓVIL */
@@ -180,6 +196,33 @@
         content: '';
         min-width: 1px;
         height: 1px;
+    }
+    
+    /* Scrollbar superior del carrusel */
+    .experiencias-grid-wrapper {
+        position: relative;
+    }
+    
+    .experiencias-scroll-indicator-top {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        margin: 0.5rem 1rem 0.75rem 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .experiencias-scroll-indicator-top::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 50%;
+        background: var(--color-primary);
+        border-radius: 10px;
+        transform: translateX(var(--scroll-position, 0px));
+        transition: transform 0.1s ease-out;
     }
     
     /* Scroll hint para carrusel */
@@ -337,6 +380,10 @@
         font-size: 20px;
     }
     
+    .tabla-precios-wrapper {
+        overflow-x: auto;
+    }
+    
     .tabla-precios-horarios {
         min-width: 400px;
     }
@@ -345,6 +392,10 @@
         min-width: 90%;
         max-width: 90%;
         margin: 0 5%;
+    }
+    
+    .experiencias-scroll-indicator-top {
+        margin: 0.5rem 0.5rem 0.75rem 0.5rem;
     }
     
     .btn-cantidad {

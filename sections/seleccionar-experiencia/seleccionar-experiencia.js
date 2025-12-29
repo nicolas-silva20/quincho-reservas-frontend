@@ -212,12 +212,14 @@ function renderSeleccionarExperiencia() {
             
             ${renderTablaPreciosHorarios()}
             
-            <div class="experiencias-grid">
-                ${Object.entries(experienciasData).map(([key, exp]) => renderExperienciaCard(key, exp)).join('')}
+            <div class="experiencias-grid-wrapper">
+                <div class="experiencias-scroll-indicator-top"></div>
+                <div class="experiencias-grid" id="experiencias-grid">
+                    ${Object.entries(experienciasData).map(([key, exp]) => renderExperienciaCard(key, exp)).join('')}
+                </div>
             </div>
             
-            <div class="verificar-container">
-                <button class="btn-verificar" id="btn-verificar" onclick="mostrarDisponibilidad()" disabled>
+            <div class="verificar-container">\n                <button class="btn-verificar" id="btn-verificar" onclick="mostrarDisponibilidad()" disabled>
                     Verificar Disponibilidad
                 </button>
             </div>
@@ -249,40 +251,60 @@ function renderSeleccionarExperiencia() {
         const hoy = new Date().toISOString().split('T')[0];
         fechaInput.setAttribute('min', hoy);
     }
+    
+    // Sincronizar indicador de scroll del carrusel (solo en móvil)
+    if (window.innerWidth <= 480) {
+        const grid = document.getElementById('experiencias-grid');
+        const indicator = document.querySelector('.experiencias-scroll-indicator-top');
+        
+        if (grid && indicator) {
+            grid.addEventListener('scroll', () => {
+                const scrollPercent = grid.scrollLeft / (grid.scrollWidth - grid.clientWidth);
+                const indicatorWidth = indicator.offsetWidth;
+                const thumbWidth = indicatorWidth * 0.5; // 50% del ancho
+                const maxTranslate = indicatorWidth - thumbWidth;
+                
+                indicator.style.setProperty('--scroll-position', `${scrollPercent * maxTranslate}px`);
+            });
+        }
+    }
 }
 
 // Renderizar tabla de precios por horarios
 function renderTablaPreciosHorarios() {
     return `
         <div class="tabla-precios-container">
-            <h2 class="tabla-precios-title">TARIFAS POR D\u00cdA Y HORARIO</h2>
-            <table class="tabla-precios-horarios">
-                <thead>
-                    <tr>
-                        <th>HORARIO</th>
-                        <th>MARTES Y MI\u00c9RCOLES</th>
-                        <th>JUEVES</th>
-                        <th>VIERNES</th>
-                        <th>S\u00c1BADOS Y DOMINGOS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="horario-label">De 12:00 a 19:00</td>
-                        <td class="precio-cell">$280.000</td>
-                        <td class="precio-cell">$300.000</td>
-                        <td class="precio-cell">$340.000</td>
-                        <td class="precio-cell">$400.000</td>
-                    </tr>
-                    <tr>
-                        <td class="horario-label">De 19:00 a 01:00</td>
-                        <td class="precio-cell no-disponible">-</td>
-                        <td class="precio-cell">$340.000</td>
-                        <td class="precio-cell">$380.000</td>
-                        <td class="precio-cell">$400.000</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2 class="tabla-precios-title">TARIFAS POR DÍA Y HORARIO</h2>
+            <div class="tabla-precios-wrapper">
+                <table class="tabla-precios-horarios">
+                    <thead>
+                        <tr>
+                            <th>HORARIO</th>
+                            <th>MARTES Y MIÉRCOLES</th>
+                            <th>JUEVES</th>
+                            <th>VIERNES</th>
+                            <th>SÁBADOS Y DOMINGOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="horario-label">De 12:00 a 19:00</td>
+                            <td class="precio-cell">$280.000</td>
+                            <td class="precio-cell">$300.000</td>
+                            <td class="precio-cell">$340.000</td>
+                            <td class="precio-cell">$400.000</td>
+                        </tr>
+                        <tr>
+                            <td class="horario-label">De 19:00 a 01:00</td>
+                            <td class="precio-cell no-disponible">-</td>
+                            <td class="precio-cell">$340.000</td>
+                            <td class="precio-cell">$380.000</td>
+                            <td class="precio-cell">$400.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="tabla-precios-scroll-hint">← Deslizá para ver más →</p>
             <p class="tabla-precios-nota">* Los precios son base. Los extras de la experiencia personalizada se suman al precio del horario seleccionado.</p>
         </div>
     `;
