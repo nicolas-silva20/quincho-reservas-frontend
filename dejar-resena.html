@@ -269,7 +269,7 @@
 
             try {
                 // Llamar al backend para crear la reseña
-                const response = await fetch(`http://localhost:8080/api/resenas/crear`, {
+                const response = await fetch(`https://quincho-reservas-backend-production.up.railway.app/api/resenas/crear`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

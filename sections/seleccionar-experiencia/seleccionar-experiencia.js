@@ -771,7 +771,7 @@ async function confirmarReservaFinal() {
                 
                 <div style="background: rgba(212, 165, 116, 0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
                     <p style="margin: 0.5rem 0;"><strong style="color: #d4a574;">Número de reserva:</strong> #${data.id}</p>
-                    <p style="margin: 0.5rem 0;"><strong style="color: #d4a574;">Cliente:</strong> ${nombre}</p>
+                    <p style="margin: 0.5rem 0;"><strong style="color: #d4a574;">Cliente:</strong> ${data.nombreCliente || nombre}</p>
                     <p style="margin: 0.5rem 0;"><strong style="color: #d4a574;">Teléfono:</strong> ${telefono}</p>
                     <p style="margin: 0.5rem 0;"><strong style="color: #d4a574;">Experiencia:</strong> ${experiencia?.nombre || 'Experiencia seleccionada'}</p>
                     <p style="margin: 0.5rem 0;"><strong style="color: #d4a574;">Fecha:</strong> ${new Date(fecha).toLocaleDateString('es-AR', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'})}</p>
