@@ -1,0 +1,372 @@
+/* ========================================
+   RESPONSIVE - SELECCIONAR EXPERIENCIA
+   ======================================== */
+
+/* TABLET: 768px - 1024px */
+@media (max-width: 1024px) {
+    .experiencia-title {
+        font-size: 36px;
+    }
+    
+    .experiencia-subtitle {
+        font-size: 16px;
+    }
+    
+    /* Tabla de precios responsive */
+    .tabla-precios-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .tabla-precios-horarios {
+        min-width: 600px;
+    }
+    
+    .tabla-precios-horarios thead th,
+    .tabla-precios-horarios tbody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 13px;
+    }
+}
+
+/* TABLET: 768px */
+@media (max-width: 768px) {
+    .seleccionar-experiencia-section {
+        padding: 100px var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .experiencia-title {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+    
+    .experiencia-subtitle {
+        font-size: 14px;
+    }
+    
+    /* Tabla de precios - scroll hint */
+    .tabla-precios-container {
+        position: relative;
+    }
+    
+    .tabla-precios-container::after {
+        content: '← Deslizá para ver más →';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        color: rgba(212, 165, 116, 0.6);
+        font-family: var(--font-secondary);
+        padding: 0.5rem;
+        pointer-events: none;
+    }
+    
+    .tabla-precios-horarios {
+        min-width: 550px;
+    }
+    
+    /* Extras - responsive grid */
+    .extra-item-row {
+        grid-template-columns: 1fr auto;
+        gap: 0.75rem;
+        padding: 0.5rem;
+    }
+    
+    .extra-item-precio {
+        grid-column: 1;
+        text-align: left;
+        order: 2;
+        font-size: 13px;
+    }
+    
+    .cantidad-selector {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        align-self: center;
+    }
+    
+    .btn-cantidad {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .input-cantidad {
+        width: 50px;
+    }
+    
+    /* Form responsive */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+}
+
+/* MÓVIL: 480px */
+@media (max-width: 480px) {
+    .seleccionar-experiencia-section {
+        padding: 90px 1rem var(--spacing-md);
+    }
+    
+    .experiencia-back-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    
+    .experiencia-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .experiencia-subtitle {
+        font-size: 13px;
+    }
+    
+    /* Tabla de precios - móvil compacta */
+    .tabla-precios-container {
+        padding: 0.75rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .tabla-precios-title {
+        font-size: 18px;
+        margin-bottom: 0.75rem;
+    }
+    
+    .tabla-precios-horarios {
+        min-width: 480px;
+        font-size: 12px;
+    }
+    
+    .tabla-precios-horarios thead th,
+    .tabla-precios-horarios tbody td {
+        padding: 0.5rem 0.25rem;
+        font-size: 11px;
+    }
+    
+    /* CARRUSEL DE EXPERIENCIAS EN MÓVIL */
+    .experiencias-grid {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 0 !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 0.5rem 0 1.5rem 0;
+        margin: 0 -1rem; /* Extend to screen edges */
+    }
+    
+    .experiencia-card {
+        min-width: 85%;
+        max-width: 85%;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        margin: 0 7.5%;
+        padding: 1.5rem 1rem;
+    }
+    
+    .experiencia-card:first-child {
+        margin-left: 7.5%;
+    }
+    
+    .experiencia-card:last-child {
+        margin-right: 7.5%;
+    }
+    
+    /* Indicador de carrusel */
+    .experiencias-grid::after {
+        content: '';
+        min-width: 1px;
+        height: 1px;
+    }
+    
+    /* Scroll hint para carrusel */
+    .experiencia-container::before {
+        content: '← Deslizá para ver las experiencias →';
+        display: block;
+        text-align: center;
+        font-size: 11px;
+        color: rgba(212, 165, 116, 0.6);
+        font-family: var(--font-secondary);
+        margin-bottom: 0.5rem;
+        font-style: italic;
+    }
+    
+    /* Card title */
+    .experiencia-card-title {
+        font-size: 22px;
+        letter-spacing: 1.5px;
+    }
+    
+    .precio-nota-extra {
+        font-size: 11px;
+        padding: 0.4rem 0.75rem;
+    }
+    
+    /* Items de experiencia */
+    .experiencia-item {
+        padding: 10px 0;
+        font-size: 13px;
+    }
+    
+    .item-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+    }
+    
+    .item-nombre {
+        font-size: 13px;
+    }
+    
+    .item-obligatorio {
+        font-size: 10px;
+    }
+    
+    .subitems-list .subitem {
+        font-size: 11px;
+        padding: 3px 0;
+    }
+    
+    /* Extras selector responsive */
+    .extras-selector {
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+    }
+    
+    .extras-title {
+        font-size: 12px;
+        margin-bottom: 0.75rem;
+    }
+    
+    .extra-item-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .extra-item-nombre {
+        font-size: 13px;
+        order: 1;
+    }
+    
+    .extra-item-precio {
+        order: 2;
+        text-align: left;
+        font-size: 12px;
+        color: #4caf50;
+    }
+    
+    .cantidad-selector {
+        order: 3;
+        justify-content: space-between;
+        width: 100%;
+        gap: 0.5rem;
+    }
+    
+    .btn-cantidad {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .input-cantidad {
+        flex: 1;
+        width: auto;
+        max-width: 80px;
+        padding: 0.75rem 0.5rem;
+        font-size: 16px;
+    }
+    
+    /* Botones de acción */
+    .experiencia-card .btn-seleccionar {
+        padding: 0.75rem 1.5rem;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+    }
+    
+    /* Form contacto */
+    .contacto-form {
+        padding: 1rem;
+    }
+    
+    .contacto-form h4 {
+        font-size: 16px;
+    }
+    
+    .contacto-descripcion {
+        font-size: 12px;
+    }
+    
+    .form-group label {
+        font-size: 12px;
+    }
+    
+    .form-input {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    /* Botones finales */
+    .btn-opcion {
+        padding: 0.75rem 1.25rem;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+    }
+    
+    /* Terminos y condiciones */
+    .terminos-scroll {
+        max-height: 250px;
+    }
+    
+    .terminos-lista li {
+        font-size: 12px;
+        margin-bottom: 0.75rem;
+    }
+    
+    .terminos-checkbox label {
+        font-size: 12px;
+    }
+}
+
+/* MÓVIL PEQUEÑO: 360px */
+@media (max-width: 360px) {
+    .experiencia-title {
+        font-size: 20px;
+    }
+    
+    .tabla-precios-horarios {
+        min-width: 400px;
+    }
+    
+    .experiencia-card {
+        min-width: 90%;
+        max-width: 90%;
+        margin: 0 5%;
+    }
+    
+    .btn-cantidad {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+}
+
+/* Scrollbar styling para carrusel */
+@media (max-width: 480px) {
+    .experiencias-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    .experiencias-grid::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+    
+    .experiencias-grid::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 10px;
+    }
+}
