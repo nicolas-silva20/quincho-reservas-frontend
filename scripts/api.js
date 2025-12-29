@@ -5,7 +5,7 @@
 // Detectar automáticamente el entorno (desarrollo local vs producción)
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:8080/api'
-    : 'https://tu-backend-railway.up.railway.app/api'; // CAMBIAR por tu URL de Railway cuando despliegues
+    : 'https://quincho-reservas-backend-production.up.railway.app/api';
 
 // ===================================
 // FUNCIÓN HELPER PARA PETICIONES
