@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dejar Reseña - El Umbral</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .resena-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .resena-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .resena-logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .resena-title {
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-primary);
+            letter-spacing: 3px;
+        }
+
+        .resena-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--color-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            font-family: var(--font-secondary);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: var(--font-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .rating-container {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .star {
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: rgba(212, 165, 116, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: var(--color-primary);
+            transform: scale(1.2);
+        }
+
+        .btn-enviar {
+            width: 100%;
+            padding: 1rem;
+            background: var(--color-primary);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-secondary);
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-enviar:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.4);
+        }
+
+        .btn-enviar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .aviso-publico {
+            background: rgba(212, 165, 116, 0.1);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .icono-info {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .aviso-publico p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .mensaje {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .mensaje.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 2px solid #f44336;
+            color: #ff5252;
+        }
+
+        .mensaje.exito {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4caf50;
+            color: #4caf50;
+        }
+
+        .loading {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="resena-container">
+        <div class="resena-header">
+            <div class="resena-logo">⭐</div>
+            <h1 class="resena-title">DEJÁ TU RESEÑA</h1>
+            <p class="resena-subtitle">Tu opinión es muy importante para nosotros</p>
+        </div>
+
+        <div id="mensaje-container"></div>
+        <div id="form-container"></div>
+    </div>
+
+    <script src="scripts/api.js"></script>
+    <script>
+        let calificacion = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        async function cargarFormulario() {
+            const container = document.getElementById('form-container');
+            
+            if (!token) {
+                mostrarError('Token inválido. Por favor, usa el link que recibiste por WhatsApp.');
+                return;
+            }
+
+            container.innerHTML = `
+                <form id="resena-form" onsubmit="enviarResena(event)">
+                    <!-- Aviso de publicación pública -->
+                    <div class="aviso-publico">
+                        <span class="icono-info">ℹ️</span>
+                        <p>Tu reseña será publicada en nuestro sitio web con tu nombre visible. Al enviarla, aceptas que aparezca públicamente para ayudar a otros clientes.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">CALIFICACIÓN</label>
+                        <div class="rating-container">
+                            ${[1,2,3,4,5].map(i => `<span class="star" onclick="setRating(${i})">★</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="comentario">TU COMENTARIO</label>
+                        <textarea 
+                            id="comentario" 
+                            class="form-textarea" 
+                            placeholder="Contanos sobre tu experiencia en El Umbral..."
+                            required
+                            maxlength="500"
+                        ></textarea>
+                        <small style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">Máximo 500 caracteres</small>
+                    </div>
+
+                    <button type="submit" class="btn-enviar" id="btn-enviar">
+                        ENVIAR RESEÑA
+                    </button>
+                </form>
+            `;
+        }
+
+        function setRating(rating) {
+            calificacion = rating;
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        async function enviarResena(event) {
+            event.preventDefault();
+
+            if (calificacion === 0) {
+                mostrarError('Por favor, seleccioná una calificación (estrellas)');
+                return;
+            }
+
+            const comentario = document.getElementById('comentario').value;
+            const btnEnviar = document.getElementById('btn-enviar');
+            btnEnviar.disabled = true;
+            btnEnviar.textContent = 'ENVIANDO...';
+
+            try {
+                // Llamar al backend para crear la reseña
+                const response = await fetch(`http://localhost:8080/api/resenas/crear`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        calificacion: calificacion,
+                        comentario: comentario
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    mostrarExito('¡Gracias por tu reseña! Será revisada y publicada pronto.');
+                    document.getElementById('form-container').innerHTML = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">✓</div>
+                            <p style="color: var(--color-primary); font-size: 1.2rem;">¡Reseña enviada exitosamente!</p>
+                            <p style="color: rgba(255,255,255,0.7); margin-top: 1rem;">Gracias por tu tiempo.</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(result.message || 'Error al enviar la reseña');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarError(error.message || 'Error al enviar la reseña. Intentá nuevamente.');
+                btnEnviar.disabled = false;
+                btnEnviar.textContent = 'ENVIAR RESEÑA';
+            }
+        }
+
+        function mostrarError(mensaje) {
+            const container = document.getElementById('mensaje-container');
+            container.innerHTML = `<div class="mensaje error">${mensaje}</div>`;
+        }
+
+        function mostrarExito(mensaje) {
+            const container = document.getElementById('mensaje-container');
+            container.innerHTML = `<div class="mensaje exito">${mensaje}</div>`;
+        }
+
+        // Cargar formulario al iniciar
+        document.addEventListener('DOMContentLoaded', cargarFormulario);
+    </script>
+</body>
+</html>

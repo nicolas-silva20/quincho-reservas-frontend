@@ -1,0 +1,147 @@
+/* Tablets */
+@media (max-width: 1024px) {
+    .que-ofrecemos-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .que-ofrecemos-content {
+        padding-right: 0;
+        text-align: center;
+    }
+    
+    .decorative-line {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .carousel-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .hero-title {
+        font-size: 60px;
+        letter-spacing: 10px;
+    }
+    
+    .nav-menu {
+        gap: var(--spacing-sm);
+    }
+    
+    .reservar-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .reservar-content {
+        padding-left: 0;
+        text-align: center;
+    }
+    
+    .reservar-image {
+        height: 400px;
+    }
+    
+    .resenas-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .hero-title {
+        font-size: 40px;
+        letter-spacing: 5px;
+    }
+    
+    .hero-subtitle {
+        font-size: 18px;
+        letter-spacing: 4px;
+    }
+    
+    .que-ofrecemos-title {
+        font-size: 28px;
+    }
+    
+    .carousel-slide {
+        height: 350px;
+    }
+    
+    .carousel-arrow {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-arrow.prev {
+        left: 10px;
+    }
+    
+    .carousel-arrow.next {
+        right: 10px;
+    }
+    
+    .reservar-title {
+        font-size: 32px;
+    }
+    
+    .resenas-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-nav {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+
+    .experiencias-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .experiencia-title {
+        font-size: 32px;
+    }
+    
+    .experiencia-card-title {
+        font-size: 24px;
+    }
+    
+    .disponibilidad-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn-verificar {
+        padding: 15px 40px;
+        font-size: 16px;
+    }
+    
+    .mensaje-opciones {
+        flex-direction: column;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .terminos-scroll {
+        max-height: 200px;
+    }
+    
+    .resumen-reserva {
+        padding: var(--spacing-sm);
+    }
+}

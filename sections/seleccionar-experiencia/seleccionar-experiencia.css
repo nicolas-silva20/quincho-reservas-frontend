@@ -1,0 +1,834 @@
+.seleccionar-experiencia-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    padding: 120px var(--spacing-md) var(--spacing-xl);
+}
+
+.experiencia-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.experiencia-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.experiencia-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 12px 24px;
+    font-size: var(--font-size-small);
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all var(--transition-fast);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-secondary);
+}
+
+.experiencia-back-btn:hover {
+    background: var(--color-primary);
+    color: var(--color-dark);
+    transform: translateX(-5px);
+}
+
+.experiencia-title {
+    font-size: 48px;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 3px;
+    color: var(--color-light);
+}
+
+.experiencia-subtitle {
+    font-size: var(--font-size-medium);
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-secondary);
+    font-weight: 300;
+}
+
+/* Tabla de Precios por Horarios */
+.tabla-precios-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(212, 165, 116, 0.3);
+    border-radius: 15px;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    backdrop-filter: blur(10px);
+}
+
+.tabla-precios-title {
+    text-align: center;
+    font-size: 24px;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 2px;
+    font-family: var(--font-primary);
+}
+
+.tabla-precios-horarios {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.tabla-precios-horarios thead th {
+    background: rgba(212, 165, 116, 0.2);
+    color: var(--color-primary);
+    padding: 1rem;
+    text-align: center;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: 1px solid rgba(212, 165, 116, 0.3);
+}
+
+.tabla-precios-horarios tbody td {
+    padding: 0.875rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-secondary);
+}
+
+.tabla-precios-horarios .horario-label {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    text-align: left;
+    padding-left: 1.5rem;
+}
+
+.tabla-precios-horarios .precio-cell {
+    color: #4caf50;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.tabla-precios-horarios .precio-cell.no-disponible {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 20px;
+}
+
+.tabla-precios-nota {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-secondary);
+    font-style: italic;
+    margin: 0;
+}
+
+/* Columnas de experiencias */
+.experiencias-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.experiencia-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: var(--spacing-md);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.experiencia-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+}
+
+.experiencia-card:hover::before {
+    transform: scaleX(1);
+}
+
+.experiencia-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(212, 165, 116, 0.2);
+}
+
+.experiencia-card.selected {
+    border-color: var(--color-primary);
+    background: rgba(212, 165, 116, 0.1);
+}
+
+.experiencia-card.selected::before {
+    transform: scaleX(1);
+}
+
+.experiencia-card-header {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.experiencia-card-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+    letter-spacing: 2px;
+}
+
+.precio-nota-extra {
+    font-size: 13px;
+    color: rgba(212, 165, 116, 0.8);
+    font-family: var(--font-secondary);
+    font-style: italic;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    background: rgba(212, 165, 116, 0.1);
+    border-radius: 8px;
+}
+
+.experiencia-items {
+    list-style: none;
+}
+
+.experiencia-item {
+    padding: 12px 0;
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-small);
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.experiencia-item .item-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.experiencia-item:last-child {
+    border-bottom: none;
+}
+
+.experiencia-item.desplegable {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.experiencia-item.desplegable .item-main {
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+}
+
+.experiencia-item.desplegable .toggle-arrow {
+    margin-left: auto;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+
+.experiencia-item.desplegable:hover .toggle-arrow {
+    transform: translateY(2px);
+}
+
+.subitems-list {
+    list-style: none;
+    padding: 0.5rem 0 0.5rem 2.5rem;
+    margin: 0;
+    width: 100%;
+    display: none;
+}
+
+.experiencia-item.desplegable:hover .subitems-list {
+    display: block;
+}
+
+.subitems-list .subitem {
+    padding: 4px 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+}
+
+.item-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.item-icon.included {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+}
+
+.item-icon.not-included {
+    background: rgba(244, 67, 54, 0.2);
+    color: #F44336;
+}
+
+/* Selector de Extras */
+.extras-selector {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(212, 165, 116, 0.05);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(212, 165, 116, 0.2);
+}
+
+.extras-title {
+    font-size: 14px;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    text-align: center;
+}
+
+.extras-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.extra-item-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.extra-item-nombre {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-secondary);
+}
+
+.extra-item-precio {
+    font-size: 14px;
+    color: #4caf50;
+    font-weight: 600;
+    font-family: var(--font-secondary);
+    min-width: 90px;
+    text-align: right;
+}
+
+.cantidad-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-cantidad {
+    width: 32px;
+    height: 32px;
+    background: rgba(212, 165, 116, 0.2);
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-cantidad:hover {
+    background: var(--color-primary);
+    color: var(--color-dark);
+}
+
+.input-cantidad {
+    width: 60px;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-family: var(--font-secondary);
+    font-weight: 600;
+}
+
+.input-cantidad:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* Remove spinner from number input */
+.input-cantidad::-webkit-inner-spin-button,
+.input-cantidad::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-cantidad {
+    -moz-appearance: textfield;
+}
+
+.experiencia-item.expanded .extras-selector {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+/* Botón de verificar disponibilidad */
+.verificar-container {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+}
+
+.btn-verificar {
+    padding: 20px 60px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border: none;
+    color: var(--color-dark);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all var(--transition-fast);
+    font-family: var(--font-secondary);
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
+}
+
+.btn-verificar:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(212, 165, 116, 0.4);
+}
+
+.btn-verificar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Sección de disponibilidad */
+.disponibilidad-section {
+    max-width: 900px;
+    margin: var(--spacing-lg) auto 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: var(--spacing-lg);
+    display: none;
+}
+
+.disponibilidad-section.active {
+    display: block;
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.disponibilidad-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.date-picker-container,
+.time-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.date-picker-container label,
+.time-picker-container label {
+    font-size: var(--font-size-small);
+    color: var(--color-primary);
+    letter-spacing: 2px;
+    font-family: var(--font-secondary);
+    font-weight: 500;
+}
+
+.date-input,
+.time-select {
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--color-light);
+    font-size: var(--font-size-medium);
+    font-family: var(--font-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.date-input:focus,
+.time-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.time-select option {
+    background: #1a1a1a;
+    color: var(--color-light);
+}
+
+/* Mensaje de disponibilidad */
+.disponibilidad-mensaje {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    display: none;
+}
+
+.disponibilidad-mensaje.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.mensaje-disponible {
+    border: 2px solid #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.mensaje-no-disponible {
+    border: 2px solid #F44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.mensaje-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.mensaje-text {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: var(--spacing-sm);
+    font-family: var(--font-secondary);
+}
+
+.mensaje-opciones {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin-top: var(--spacing-md);
+}
+
+.btn-opcion {
+    padding: 12px 30px;
+    border: 2px solid var(--color-light);
+    background: transparent;
+    color: var(--color-light);
+    font-size: var(--font-size-small);
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all var(--transition-fast);
+    font-family: var(--font-secondary);
+}
+
+.btn-opcion.primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-dark);
+}
+
+.btn-opcion:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn-opcion.primary:hover {
+    box-shadow: 0 5px 15px rgba(212, 165, 116, 0.4);
+}
+
+/* ...existing code... */
+
+/* Estilos adicionales para experiencia personalizada */
+.experiencia-item.clickable {
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.experiencia-item.clickable:hover {
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 15px;
+}
+
+.item-nombre {
+    flex: 1;
+}
+
+.item-costo {
+    font-size: 12px;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.item-obligatorio {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    margin-left: auto;
+}
+
+.precio-nota {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* Resumen de reserva */
+.resumen-reserva {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.resumen-reserva h4 {
+    font-size: 18px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-secondary);
+}
+
+.resumen-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    margin-top: 10px;
+    border-top: 2px solid var(--color-primary);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+/* Términos y condiciones */
+.terminos-condiciones {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.terminos-condiciones h4 {
+    font-size: 18px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.terminos-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.terminos-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminos-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.terminos-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 4px;
+}
+
+.terminos-lista {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    padding-left: 20px;
+}
+
+.terminos-lista li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.terminos-lista strong {
+    color: var(--color-primary);
+}
+
+.terminos-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all var(--transition-fast);
+}
+
+.terminos-checkbox:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.terminos-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Formulario de contacto */
+.contacto-form {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.contacto-form h4 {
+    font-size: 18px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.contacto-descripcion {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-secondary);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: var(--font-size-small);
+    color: var(--color-primary);
+    letter-spacing: 1px;
+    font-family: var(--font-secondary);
+    font-weight: 500;
+}
+
+.form-input {
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--color-light);
+    font-size: var(--font-size-medium);
+    font-family: var(--font-secondary);
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-input option {
+    background: #1a1a1a;
+    color: var(--color-light);
+}
+
+/* Mensajes */
+.mensaje-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-light);
+}
+
+.mensaje-subtext {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-secondary);
+    font-style: italic;
+}

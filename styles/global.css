@@ -1,0 +1,71 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+/* Reset y Variables Globales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colores */
+    --color-primary: #d4a574;
+    --color-secondary: #8b7355;
+    --color-dark: #000000;
+    --color-light: #ffffff;
+    --color-overlay: rgba(0, 0, 0, 0.5);
+    --color-overlay-dark: rgba(0, 0, 0, 0.7);
+    
+    /* Fuentes */
+    --font-primary: 'Cinzel', serif;
+    --font-secondary: 'Montserrat', sans-serif;
+    
+    /* Espaciados */
+    --spacing-xs: 10px;
+    --spacing-sm: 20px;
+    --spacing-md: 40px;
+    --spacing-lg: 60px;
+    --spacing-xl: 80px;
+    
+    /* Tamaños de fuente */
+    --font-size-small: 14px;
+    --font-size-medium: 16px;
+    --font-size-large: 24px;
+    --font-size-xlarge: 40px;
+    --font-size-xxlarge: 80px;
+    
+    /* Transiciones */
+    --transition-fast: 0.3s ease;
+    --transition-medium: 0.5s ease;
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--color-light);
+    overflow-x: hidden;
+    background-color: var(--color-dark);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Utilidades */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Importar fuentes de Google */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap');

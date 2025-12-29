@@ -1,0 +1,117 @@
+.landing-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../assets/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-overlay);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 var(--spacing-sm);
+}
+
+.hero-title {
+    font-size: var(--font-size-xxlarge);
+    font-weight: 400;
+    letter-spacing: 15px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: fadeInDown 1s ease-out;
+    font-family: 'Abril Fatface', serif;
+    text-transform: uppercase;
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-large);
+    font-weight: 300;
+    letter-spacing: 8px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    animation: fadeInDown 1.2s ease-out;
+}
+
+.hero-description {
+    font-size: var(--font-size-medium);
+    line-height: 1.8;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 50px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    font-family: var(--font-secondary);
+    animation: fadeInUp 1.4s ease-out;
+}
+
+.scroll-btn {
+    background: transparent;
+    border: 2px solid var(--color-light);
+    color: var(--color-light);
+    padding: 15px 40px;
+    font-size: var(--font-size-small);
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-secondary);
+    animation: fadeInUp 1.6s ease-out;
+}
+
+.scroll-btn:hover {
+    background: var(--color-light);
+    color: var(--color-dark);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+.scroll-btn svg {
+    transition: transform var(--transition-fast);
+}
+
+.scroll-btn:hover svg {
+    transform: translateY(5px);
+}
+
+.scroll-btn:hover svg path {
+    stroke: var(--color-dark);
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
