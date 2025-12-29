@@ -1189,3 +1189,113 @@ function abrirWhatsApp(telefono, token, nombreCliente) {
     const whatsappLink = `https://wa.me/${telefonoLimpio}?text=${mensajeCodificado}`;
     window.open(whatsappLink, '_blank');
 }
+
+/**
+ * Renderizar reservas adaptable (tabla o cards según tamaño de pantalla)
+ */
+function renderizarReservasResponsive() {
+    const isMobile = window.innerWidth <= 480;
+    const container = document.querySelector('.reservas-table-container');
+    
+    if (isMobile && !container.classList.contains('mobile-cards')) {
+        // Cambiar a modo cards
+        container.classList.add('mobile-cards');
+        renderizarReservasCards(reservasFiltradas);
+    } else if (!isMobile && container.classList.contains('mobile-cards')) {
+        // Volver a modo tabla
+        container.classList.remove('mobile-cards');
+        renderizarReservas(reservasFiltradas);
+    }
+}
+
+/**
+ * Renderizar reservas como cards para móvil
+ */
+function renderizarReservasCards(reservas) {
+    const container = document.querySelector('.reservas-table-container');
+    const inicio = (paginaActual - 1) * reservasPorPagina;
+    const fin = inicio + reservasPorPagina;
+    const reservasPaginadas = reservas.slice(inicio, fin);
+    
+    container.innerHTML = '';
+    
+    reservasPaginadas.forEach(reserva => {
+        const fechaEvento = parsearFecha(reserva.fechaEvento);
+        const fecha = fechaEvento.toLocaleDateString('es-AR', { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric' 
+        });
+        
+        let horaEvento = '';
+        if (Array.isArray(reserva.horaInicio)) {
+            horaEvento = `${String(reserva.horaInicio[0]).padStart(2, '0')}:${String(reserva.horaInicio[1]).padStart(2, '0')}`;
+        } else {
+            horaEvento = reserva.horaInicio || '';
+        }
+        
+        const card = document.createElement('div');
+        card.className = 'reserva-card-mobile';
+        card.innerHTML = `
+            <div class="reserva-card-header">
+                <span class="reserva-card-id">#${reserva.id}</span>
+                <span class="estado-badge ${reserva.estado}">${formatearEstado(reserva.estado)}</span>
+            </div>
+            <div class="reserva-card-body">
+                <div class="reserva-card-field">
+                    <span class="reserva-card-label">Cliente:</span>
+                    <span class="reserva-card-value">${reserva.nombreCliente}</span>
+                </div>
+                <div class="reserva-card-field">
+                    <span class="reserva-card-label">Teléfono:</span>
+                    <span class="reserva-card-value">${reserva.telefonoCliente}</span>
+                </div>
+                <div class="reserva-card-field">
+                    <span class="reserva-card-label">Experiencia:</span>
+                    <span class="reserva-card-value">${reserva.nombreExperiencia}</span>
+                </div>
+                <div class="reserva-card-field">
+                    <span class="reserva-card-label">Fecha:</span>
+                    <span class="reserva-card-value">${fecha} ${horaEvento}</span>
+                </div>
+                <div class="reserva-card-field">
+                    <span class="reserva-card-label">Total:</span>
+                    <span class="reserva-card-value">$${reserva.precioTotal.toLocaleString()}</span>
+                </div>
+                <div class="reserva-card-field">
+                    <span class="reserva-card-label">Pago:</span>
+                    <span class="reserva-card-value">
+                        <span class="pago-badge ${reserva.estadoPago}">${formatearEstadoPago(reserva.estadoPago)}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="reserva-card-actions">
+                <button class="btn-action btn-ver" onclick="verDetalle(${reserva.id})">👁️ Ver</button>
+                ${reserva.estado !== 'CANCELADA_CLIENTE' && reserva.estado !== 'CANCELADA_ADMIN' ? 
+                    `<button class="btn-action btn-estado" onclick="cambiarEstado(${reserva.id})">📝 Estado</button>
+                     <button class="btn-action btn-cancelar" onclick="confirmarCancelacion(${reserva.id})">❌ Cancelar</button>` 
+                    : ''}
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// Detectar cambios de tamaño de ventana
+window.addEventListener('resize', () => {
+    if (reservasFiltradas && reservasFiltradas.length > 0) {
+        renderizarReservasResponsive();
+    }
+});
+
+// Al cargar reservas, usar modo responsive
+const renderizarReservasOriginal = renderizarReservas;
+renderizarReservas = function(reservas) {
+    if (window.innerWidth <= 480) {
+        const container = document.querySelector('.reservas-table-container');
+        container.classList.add('mobile-cards');
+        renderizarReservasCards(reservas);
+    } else {
+        renderizarReservasOriginal(reservas);
+    }
+};

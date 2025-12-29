@@ -14,13 +14,25 @@ dist-ssr
 
 # Editor directories and files
 .vscode/*
-.vscode/extensions.json
 !.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
 *.ntvs*
-*.ntvs/extensions.json/.vscode
 *.njsproj
 *.sln
 *.sw?
+
+# Archivos residuales del proyecto
+src/
+public/
+REFERENCIAS/
+CorsConfig.java
+*.sql
+railway_*.sql
+fix_*.sql
+
+# Archivos temporales
+.tmp/
+temp/
+*.tmp

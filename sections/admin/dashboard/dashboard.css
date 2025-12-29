@@ -977,45 +977,397 @@
     cursor: not-allowed;
 }
 
-/* Responsive */
+/* ================================================
+   RESPONSIVE DESIGN - MOBILE FIRST
+   ================================================ */
+
+/* Tablet (768px y menos) */
 @media (max-width: 768px) {
+    /* Navbar */
     .admin-navbar-container {
-        flex-direction: column;
-        gap: 1rem;
+        padding: 1rem;
     }
     
+    .admin-navbar-brand h1 {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .admin-navbar-actions {
+        gap: 0.5rem;
+    }
+    
+    .admin-navbar-actions button {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Main Container */
+    .admin-container {
+        padding: 1rem;
+    }
+    
+    /* Header */
+    .admin-title {
+        font-size: 1.8rem;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    
+    /* Stats Grid */
     .admin-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
     }
     
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+    }
+    
+    /* Filters */
     .admin-filters {
         flex-direction: column;
+        gap: 0.75rem;
     }
     
+    .search-input,
+    .filter-select {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    /* Table - Horizontal Scroll */
     .reservas-table-container {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
     }
     
     .reservas-table {
         min-width: 1000px;
+        font-size: 0.85rem;
     }
     
+    .reservas-table th,
+    .reservas-table td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    /* Action Buttons */
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .btn-action {
+        width: 100%;
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    /* Estado Options */
     .estado-options {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
     }
     
+    /* Modal */
+    .modal-overlay {
+        padding: 0;
+    }
+    
+    .modal-content {
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        margin: 0;
+        border-radius: 0;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    /* Detalle Section */
+    .detalle-section h3 {
+        font-size: 1.2rem;
+    }
+    
+    .detalle-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    /* Lista Section (Reseñas, etc) */
+    .tabla-lista {
+        font-size: 0.8rem;
+    }
+    
+    .tabla-lista th,
+    .tabla-lista td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    /* Stats en modales */
     .stats {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.5rem;
     }
     
+    /* Paginación */
     #paginacion {
         gap: 0.25rem;
+        flex-wrap: wrap;
     }
     
     .btn-paginacion {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
+    }
+    
+    /* Form Groups en modales */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        font-size: 0.85rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile (480px y menos) */
+@media (max-width: 480px) {
+    /* Navbar Ultra-compacto */
+    .admin-navbar-container {
+        padding: 0.75rem;
+    }
+    
+    .admin-navbar-brand {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .admin-navbar-brand h1 {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+    
+    .admin-badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+    }
+    
+    .admin-navbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .admin-navbar-actions button {
+        flex: 1;
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+    
+    /* Stats - 1 columna en móvil pequeño */
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Header */
+    .admin-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Table - Card Mode */
+    .reservas-table-container {
+        background: transparent;
+        border: none;
+    }
+    
+    /* Ocultar tabla en móvil y mostrar cards */
+    .reservas-table {
+        display: none;
+    }
+    
+    /* Estado Options - 1 columna */
+    .estado-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .estado-btn {
+        padding: 1rem;
+    }
+    
+    .estado-btn .icon {
+        font-size: 1.5rem;
+    }
+    
+    /* Modal Fullscreen */
+    .modal-content {
+        border-radius: 0;
+    }
+    
+    .modal-header {
+        padding: 1rem 0.75rem;
+        position: sticky;
+        top: 0;
+        background: #0a0a0a;
+        z-index: 10;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .btn-close {
+        padding: 0.5rem;
+        font-size: 1.5rem;
+    }
+    
+    .modal-body {
+        padding: 0.75rem;
+    }
+    
+    /* Detalle Items - Stack vertical */
+    .detalle-info {
+        gap: 0.5rem;
+    }
+    
+    .detalle-item strong {
+        font-size: 0.85rem;
+    }
+    
+    .detalle-item span {
+        font-size: 0.9rem;
+    }
+    
+    /* Botones en modales */
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .modal-actions button {
+        width: 100%;
+    }
+    
+    /* Tabla en modales */
+    .tabla-lista-container {
+        overflow-x: auto;
+    }
+    
+    .tabla-lista {
+        min-width: 600px;
+        font-size: 0.75rem;
+    }
+    
+    /* Paginación compacta */
+    .btn-paginacion {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Scroll hint para tablas */
+    .reservas-table-container::after {
+        content: '← Desliza para ver más →';
+        display: block;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+    }
+}
+
+/* Card Mode para Reservas en Mobile */
+@media (max-width: 480px) {
+    /* Crear cards en lugar de tabla */
+    .reservas-table-container.mobile-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .reserva-card-mobile {
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(212, 165, 116, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .reserva-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+    }
+    
+    .reserva-card-id {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--color-primary);
+    }
+    
+    .reserva-card-body {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .reserva-card-field {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+    }
+    
+    .reserva-card-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 600;
+    }
+    
+    .reserva-card-value {
+        color: #fff;
+        text-align: right;
+    }
+    
+    .reserva-card-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .reserva-card-actions .btn-action {
+        flex: 1;
     }
 }
 
