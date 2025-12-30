@@ -215,7 +215,10 @@ function renderSeleccionarExperiencia() {
             <div class="experiencias-grid-wrapper">
                 <div class="experiencias-scroll-indicator-top"></div>
                 <div class="experiencias-grid" id="experiencias-grid">
-                    ${Object.entries(experienciasData).map(([key, exp]) => renderExperienciaCard(key, exp)).join('')}
+                    ${Object.entries(experienciasData).map(([key, exp]) => {
+                        const disabled = key === 'personalizada' || key === 'promocion';
+                        return renderExperienciaCard(key, exp, disabled);
+                    }).join('')}
                 </div>
             </div>
             
@@ -337,12 +340,16 @@ function calcularPrecioBase(fecha, hora) {
 }
 
 // Renderizar card de experiencia
-function renderExperienciaCard(key, exp) {
+function renderExperienciaCard(key, exp, disabled = false) {
     return `
-        <div class="experiencia-card" id="card-${key}" onclick="seleccionarExperiencia('${key}')">
+        <div class="experiencia-card ${disabled ? 'disabled' : ''}" 
+             id="card-${key}" 
+             data-disabled="${disabled}"
+             onclick="seleccionarExperiencia('${key}')">
+            ${disabled ? '<div class="experiencia-badge">Próximamente</div>' : ''}
             <div class="experiencia-card-header">
                 <h3 class="experiencia-card-title">${exp.nombre}</h3>
-                ${key === 'personalizada' ? '<p class="precio-nota-extra">El precio de los extras se sumará al precio base según la fecha seleccionada</p>' : ''}
+                ${key === 'personalizada' && !disabled ? '<p class="precio-nota-extra">El precio de los extras se sumará al precio base según la fecha seleccionada</p>' : ''}
             </div>
             <ul class="experiencia-items">
                 ${exp.items.map((item, index) => renderItem(item, key, index)).join('')}
@@ -433,7 +440,7 @@ function toggleItemPersonalizado(event, index) {
     
     // Re-renderizar solo la card personalizada
     const card = document.getElementById('card-personalizada');
-    card.outerHTML = renderExperienciaCard('personalizada', experienciasData.personalizada);
+    card.outerHTML = renderExperienciaCard('personalizada', experienciasData.personalizada, true);
     
     // Mantener selección si estaba seleccionada
     if (experienciaSeleccionada === 'personalizada') {
@@ -490,6 +497,12 @@ function calcularPrecioExtras() {
 
 // Seleccionar experiencia
 function seleccionarExperiencia(tipo) {
+    // Verificar si la experiencia está deshabilitada
+    const card = document.getElementById(`card-${tipo}`);
+    if (card && card.dataset.disabled === 'true') {
+        return; // No hacer nada si está deshabilitada
+    }
+    
     experienciaSeleccionada = tipo;
     
     // Actualizar UI
@@ -627,20 +640,24 @@ function mostrarFormularioConfirmacion() {
                         pero el desorden excesivo o la falta de retiro de residuos puede implicar un cargo adicional de $5.000.
                     </li>
                     <li>
-                        <strong>Política de cancelación:</strong> Las cancelaciones realizadas con más de 7 días de 
-                        anticipación tendrán reembolso del 80% del monto abonado. Con menos de 7 días, no habrá reembolso 
-                        de la seña o pago realizado. En caso de cancelación por parte de El Umbral, se reembolsará el 
-                        100% del monto abonado.
+                        <strong>Política de cancelación:</strong> Las cancelaciones realizadas con más de 48 horas de 
+                        anticipación no tendrán cargo. Con menos de 48 horas, la seña no será devuelta. 
+                        En caso de cancelación por parte de El Umbral, se reembolsará el 100% del monto abonado.
                     </li>
                     <li>
                         <strong>Normas de convivencia:</strong> Se debe respetar el nivel de ruido especialmente después 
                         de las 23:00 horas para no molestar a los vecinos. El incumplimiento de esta norma puede resultar 
                         en la finalización anticipada del evento sin derecho a reembolso.
                     </li>
+                    <li>
+                        <strong>Seguridad de menores:</strong> Si entre los asistentes hay menores de 6 años, se debe abonar 
+                        un adicional de $30.000 para contratar un guardavidas/bañero certificado por seguridad. Es obligatorio 
+                        informar la presencia de menores al momento de la reserva.
+                    </li>
                 </ol>
             </div>
-            <label class="terminos-checkbox">
-                <input type="checkbox" id="acepto-terminos" onchange="validarFormulario()">
+            <label class="terminos-checkbox" id="terminos-checkbox-label">
+                <input type="checkbox" id="acepto-terminos" onchange="validarFormulario()" disabled>
                 <span>He leído y acepto los términos y condiciones mencionados</span>
             </label>
         </div>
@@ -688,6 +705,33 @@ function mostrarFormularioConfirmacion() {
             </button>
         </div>
     `;
+    
+    // Configurar detección de scroll para habilitar checkbox
+    setTimeout(() => {
+        const terminosScroll = document.querySelector('.terminos-scroll');
+        const checkbox = document.getElementById('acepto-terminos');
+        const checkboxLabel = document.getElementById('terminos-checkbox-label');
+        
+        if (terminosScroll && checkbox && checkboxLabel) {
+            // Agregar indicador visual de que debe hacer scroll
+            checkboxLabel.style.opacity = '0.5';
+            checkboxLabel.style.cursor = 'not-allowed';
+            
+            terminosScroll.addEventListener('scroll', function() {
+                // Verificar si llegó al final (con margen de 10px por precisión)
+                const scrolledToBottom = terminosScroll.scrollHeight - terminosScroll.scrollTop <= terminosScroll.clientHeight + 10;
+                
+                if (scrolledToBottom) {
+                    checkbox.disabled = false;
+                    checkboxLabel.style.opacity = '1';
+                    checkboxLabel.style.cursor = 'pointer';
+                    
+                    // Agregar una pequeña notificación visual
+                    checkboxLabel.style.animation = 'pulse 0.5s ease';
+                }
+            });
+        }
+    }, 100);
 }
 
 // Mostrar mensaje de no disponible
