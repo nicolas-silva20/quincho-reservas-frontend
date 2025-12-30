@@ -145,7 +145,6 @@
     transition: all var(--transition-fast);
     cursor: pointer;
     position: relative;
-    overflow: hidden;
 }
 
 .experiencia-card::before {
@@ -242,6 +241,19 @@
     padding: 0.5rem 1rem;
     background: rgba(212, 165, 116, 0.1);
     border-radius: 8px;
+}
+
+.precio-promocion {
+    font-size: 16px;
+    color: #4caf50;
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+    padding: 0.75rem 1rem;
+    background: rgba(76, 175, 80, 0.15);
+    border-radius: 8px;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    text-align: center;
 }
 
 .experiencia-items {

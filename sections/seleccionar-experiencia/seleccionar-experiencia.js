@@ -183,6 +183,67 @@ const experienciasData = {
                 ]
             }
         ]
+    },
+    promocion: {
+        nombre: "PROMOCIÓN DEL MES",
+        precioFijo: 250000, // Precio promocional - sujeto a cambios
+        items: [
+            // Items de la experiencia estándar (todos incluidos y bloqueados)
+            { nombre: "Cocina", incluido: true, bloqueado: true },
+            { nombre: "Churrasquera (Interior)", incluido: true, bloqueado: true },
+            { nombre: "Horno de barro", incluido: true, bloqueado: true },
+            { nombre: "Parrilla (fogonero)", incluido: true, bloqueado: true },
+            { 
+                nombre: "Vajilla Completa", 
+                incluido: true,
+                bloqueado: true,
+                desplegable: true,
+                subitems: ["Vasos", "Jarras", "Pocillo con plato de café", "Platos (hondos, planos, postre - vidrio)", "Cubiertos (cuchillos, tenedores, cucharas, cucharas postre)"]
+            },
+            { 
+                nombre: "Utensilios de Cocina", 
+                incluido: true,
+                bloqueado: true,
+                desplegable: true,
+                subitems: ["Ensaladeras (grandes y chicas)", "Bandejas para picada", "Tabla de asador", "Pava", "Licuadora", "Minipimer"]
+            },
+            { 
+                nombre: "Especiero Completo", 
+                incluido: true,
+                bloqueado: true,
+                desplegable: true,
+                subitems: ["Sal", "Pimienta", "Orégano", "Ají", "Sal parrillera", "Aceite girasol", "Aceite oliva", "Aceto", "Vinagre manzana"]
+            },
+            { 
+                nombre: "Mobiliario", 
+                incluido: true,
+                bloqueado: true,
+                desplegable: true,
+                subitems: ["Mesas", "Sillas", "Barra", "Banquetas"]
+            },
+            { nombre: "Piscina con solarium y cascada", incluido: true, bloqueado: true },
+            { nombre: "Ducha", incluido: true, bloqueado: true },
+            { nombre: "Reposeras-cama", incluido: true, bloqueado: true },
+            { nombre: "Sillones relax", incluido: true, bloqueado: true },
+            { nombre: "Heladera-freezer", incluido: true, bloqueado: true },
+            { nombre: "Freezer", incluido: true, bloqueado: true },
+            { 
+                nombre: "Elementos de Mesa", 
+                incluido: true,
+                bloqueado: true,
+                desplegable: true,
+                subitems: ["Hieleras con pinzas", "Braseros para mesa", "Servilleteros con servilletas"]
+            },
+            { 
+                nombre: "Elementos de Servicio", 
+                incluido: true,
+                bloqueado: true,
+                desplegable: true,
+                subitems: ["Papel higiénico", "Toalla de baño", "Fósforos", "Cafetera"]
+            }
+            // Por ahora solo incluye la base estándar
+            // Los extras se definirán cuando se active la promoción
+        ]
     }
 };
 
@@ -341,6 +402,9 @@ function calcularPrecioBase(fecha, hora) {
 
 // Renderizar card de experiencia
 function renderExperienciaCard(key, exp, disabled = false) {
+    const precioPromo = key === 'promocion' && exp.precioFijo ? 
+        `<p class="precio-promocion">💰 Precio fijo: $${exp.precioFijo.toLocaleString('es-AR')}</p>` : '';
+    
     return `
         <div class="experiencia-card ${disabled ? 'disabled' : ''}" 
              id="card-${key}" 
@@ -349,6 +413,7 @@ function renderExperienciaCard(key, exp, disabled = false) {
             ${disabled ? '<div class="experiencia-badge">Próximamente</div>' : ''}
             <div class="experiencia-card-header">
                 <h3 class="experiencia-card-title">${exp.nombre}</h3>
+                ${precioPromo}
                 ${key === 'personalizada' && !disabled ? '<p class="precio-nota-extra">El precio de los extras se sumará al precio base según la fecha seleccionada</p>' : ''}
             </div>
             <ul class="experiencia-items">
