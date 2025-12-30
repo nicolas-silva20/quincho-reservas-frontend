@@ -314,6 +314,35 @@ function renderSeleccionarExperiencia() {
     if (fechaInput) {
         const hoy = new Date().toISOString().split('T')[0];
         fechaInput.setAttribute('min', hoy);
+        
+        // Fechas bloqueadas manualmente (formato YYYY-MM-DD)
+        const fechasBloqueadas = [
+            '2025-12-31', // 31 de diciembre 2025
+            '2026-01-01'  // 1 de enero 2026
+        ];
+        
+        // Validar fecha seleccionada
+        fechaInput.addEventListener('input', function(e) {
+            const fechaSeleccionada = e.target.value;
+            if (!fechaSeleccionada) return;
+            
+            const fecha = new Date(fechaSeleccionada + 'T12:00:00');
+            const diaSemana = fecha.getDay(); // 0=Domingo, 1=Lunes, 6=Sábado
+            
+            // Validar si es lunes (día 1)
+            if (diaSemana === 1) {
+                notifyError('❌ Lo sentimos, no alquilamos el lugar los lunes. Por favor selecciona otro día.');
+                e.target.value = '';
+                return;
+            }
+            
+            // Validar si es una fecha bloqueada
+            if (fechasBloqueadas.includes(fechaSeleccionada)) {
+                notifyError('❌ Esta fecha no está disponible. Por favor selecciona otra fecha.');
+                e.target.value = '';
+                return;
+            }
+        });
     }
     
     // Sincronizar indicador de scroll del carrusel (solo en móvil)
