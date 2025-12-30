@@ -286,6 +286,10 @@ function renderSeleccionarExperiencia() {
             <div class="verificar-container">\n                <button class="btn-verificar" id="btn-verificar" onclick="mostrarDisponibilidad()" disabled>
                     Verificar Disponibilidad
                 </button>
+                <div class="helper-message" id="helper-message">
+                    <span class="helper-arrow">↑</span>
+                    <span>Primero seleccioná una experiencia arriba</span>
+                </div>
             </div>
             
             <div class="disponibilidad-section" id="disponibilidad-section">
@@ -344,6 +348,12 @@ function renderSeleccionarExperiencia() {
             }
         });
     }
+    
+    // Agregar animación pulse a las cards para guiar al usuario
+    const cards = document.querySelectorAll('.experiencia-card:not(.disabled)');
+    cards.forEach(card => {
+        card.classList.add('pulse-hint');
+    });
     
     // Sincronizar indicador de scroll del carrusel (solo en móvil)
     if (window.innerWidth <= 480) {
@@ -602,11 +612,18 @@ function seleccionarExperiencia(tipo) {
     // Actualizar UI
     document.querySelectorAll('.experiencia-card').forEach(card => {
         card.classList.remove('selected');
+        card.classList.remove('pulse-hint'); // Detener animación pulse
     });
     document.getElementById(`card-${tipo}`).classList.add('selected');
     
     // Habilitar botón
     document.getElementById('btn-verificar').disabled = false;
+    
+    // Ocultar mensaje helper
+    const helperMessage = document.getElementById('helper-message');
+    if (helperMessage) {
+        helperMessage.classList.add('hidden');
+    }
     
     // Ocultar sección de disponibilidad si estaba visible
     document.getElementById('disponibilidad-section').classList.remove('active');
@@ -631,6 +648,9 @@ async function verificarDisponibilidad() {
         return;
     }
     
+    // ⚠️ TESTING MODE: Descomentar línea de abajo para probar con Live Server (SOLO VISUAL)
+    // return mockVerificarDisponibilidad(mensajeDiv);
+    
     try {
         // Llamar al backend real - ahora devuelve ApiResponseDTO
         const response = await verificarDisponibilidadAPI(fecha, hora);
@@ -646,6 +666,12 @@ async function verificarDisponibilidad() {
         console.error('Error al verificar disponibilidad:', error);
         notifyError('Error al verificar disponibilidad. Por favor intente nuevamente.');
     }
+}
+
+// Función mock para testing visual (NO USAR EN PRODUCCIÓN)
+function mockVerificarDisponibilidad(mensajeDiv) {
+    mensajeDiv.classList.add('active');
+    mostrarFormularioConfirmacion();
 }
 
 // Mostrar formulario de confirmación
@@ -705,48 +731,32 @@ function mostrarFormularioConfirmacion() {
                     </li>
                     <li>
                         <strong>Depósito en garantía:</strong> Se requiere un depósito de $${depositoGarantia.toLocaleString('es-AR')} 
-                        que será devuelto de forma inmediata una vez corroborado el estado de las instalaciones y elementos, siempre y cuando 
-                        las instalaciones sean entregadas en las mismas condiciones en que fueron recibidas. Este depósito 
-                        cubre posibles daños materiales, roturas o pérdida de elementos del quincho.
+                        que puede abonarse el día del evento. Será devuelto de forma inmediata una vez corroborado el estado 
+                        de las instalaciones, siempre y cuando sean entregadas en las mismas condiciones en que fueron recibidas. 
+                        Si los daños superan el monto del depósito, se deberá firmar un pagaré por $500.000 con vencimiento a 30 días.
                     </li>
                     <li>
                         <strong>Inspección previa obligatoria:</strong> Es obligatorio realizar una visita de inspección 
                         al predio dentro de las 48 horas posteriores a la confirmación de esta reserva. Durante esta visita 
-                        se realizará el pago correspondiente mediante seña del 50% o cancelación total del alquiler.
+                        se realizará el pago de la seña del 50% del valor del alquiler.
                     </li>
                     <li>
-                        <strong>Horarios permitidos:</strong> El quincho opera en 2 turnos:<br>
-                        - Turno Tarde: 12:00 a 19:00 horas<br>
-                        - Turno Noche: 19:00 a 01:00 horas<br>
-                        Solo se puede reservar un turno por día. Martes y Miércoles únicamente turno tarde disponible.
-                        El ingreso se hará efectivo en el horario seleccionado y la entrega debe realizarse puntualmente 
-                        al finalizar el tiempo contratado. El exceso de horario tendrá un cargo adicional de $30.000 por hora.
+                        <strong>Horarios:</strong> Turno Tarde (12:00-19:00) y Turno Noche (19:00-01:00). 
+                        Martes y Miércoles únicamente turno tarde. Puede extender su estadía (turno tarde) o adelantar entrada 
+                        con cargo de $30.000 por hora.
                     </li>
                     <li>
-                        <strong>Estado de las instalaciones:</strong> El cliente se compromete a hacer uso responsable 
-                        de todas las instalaciones y equipamiento. Cualquier daño, rotura o pérdida será deducido del 
-                        depósito en garantía. Si los daños superan el monto del depósito, el cliente se compromete a 
-                        abonar la diferencia.
+                        <strong>Limpieza:</strong> Dejar el espacio en orden básico. La basura en los cestos provistos. 
+                        Desorden excesivo: cargo de $10.000. <strong>PROHIBIDO consumir alimentos/bebidas DENTRO de la piscina.</strong> 
+                        Detección de residuos en piscina: cargo por vaciado y llenado con camión cisterna.
                     </li>
                     <li>
-                        <strong>Limpieza:</strong> Se solicita dejar el espacio en condiciones básicas de orden. 
-                        La basura debe ser depositada en los contenedores provistos. No se exige limpieza profunda, 
-                        pero el desorden excesivo o la falta de retiro de residuos puede implicar un cargo adicional de $5.000.
+                        <strong>Cancelación:</strong> Cancelación en los 5 días hábiles previos: reintegro del 50% de la seña. 
+                        No presentarse sin aviso: pérdida total de la seña. Cancelación por El Umbral: reembolso 100%.
                     </li>
                     <li>
-                        <strong>Política de cancelación:</strong> Las cancelaciones realizadas con más de 48 horas de 
-                        anticipación no tendrán cargo. Con menos de 48 horas, la seña no será devuelta. 
-                        En caso de cancelación por parte de El Umbral, se reembolsará el 100% del monto abonado.
-                    </li>
-                    <li>
-                        <strong>Normas de convivencia:</strong> Se debe respetar el nivel de ruido especialmente después 
-                        de las 23:00 horas para no molestar a los vecinos. El incumplimiento de esta norma puede resultar 
-                        en la finalización anticipada del evento sin derecho a reembolso.
-                    </li>
-                    <li>
-                        <strong>Seguridad de menores:</strong> Si entre los asistentes hay menores de 6 años, se debe abonar 
-                        un adicional de $30.000 para contratar un guardavidas/bañero certificado por seguridad. Es obligatorio 
-                        informar la presencia de menores al momento de la reserva.
+                        <strong>Seguridad de menores:</strong> Menores de 6 años requieren servicio de salvavidas/rescatista ($30.000 adicional). 
+                        Obligatorio informar al reservar.
                     </li>
                 </ol>
             </div>

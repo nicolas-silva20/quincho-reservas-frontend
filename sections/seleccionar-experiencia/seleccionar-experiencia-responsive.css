@@ -108,6 +108,27 @@
 /* MÓVIL: 480px */
 @media (max-width: 480px) {
     .seleccionar-experiencia-section {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .disponibilidad-section {
+        padding: 1rem;
+    }
+    
+    .mensaje-title {
+        font-size: 20px !important;
+    }
+    
+    .mensaje-text {
+        font-size: 16px !important;
+    }
+    
+    .mensaje-subtext {
+        font-size: 14px !important;
+    }
+    
+    .seleccionar-experiencia-section {
         padding: 90px 1rem var(--spacing-md);
     }
     
@@ -332,24 +353,29 @@
     
     /* Form contacto */
     .contacto-form {
-        padding: 1rem;
+        padding: 1.25rem;
     }
     
     .contacto-form h4 {
-        font-size: 16px;
+        font-size: 17px;
     }
     
     .contacto-descripcion {
-        font-size: 12px;
+        font-size: 13px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
     
     .form-group label {
-        font-size: 12px;
+        font-size: 13px;
     }
     
     .form-input {
-        padding: 10px 12px;
-        font-size: 14px;
+        padding: 12px 14px;
+        font-size: 15px;
     }
     
     /* Botones finales */
@@ -360,17 +386,40 @@
     }
     
     /* Terminos y condiciones */
+    .disponibilidad-mensaje {
+        padding: 1.25rem;
+    }
+    
+    .resumen-reserva {
+        padding: 1.25rem;
+    }
+    
+    .resumen-reserva h4 {
+        font-size: 17px;
+    }
+    
+    .terminos-condiciones {
+        padding: 1.25rem;
+    }
+    
+    .terminos-condiciones h4 {
+        font-size: 17px;
+    }
+    
     .terminos-scroll {
-        max-height: 250px;
+        max-height: 280px;
+        font-size: 14px;
+        padding: var(--spacing-sm);
     }
     
     .terminos-lista li {
-        font-size: 12px;
-        margin-bottom: 0.75rem;
+        font-size: 14px;
+        margin-bottom: 1rem;
+        line-height: 1.6;
     }
     
     .terminos-checkbox label {
-        font-size: 12px;
+        font-size: 13px;
     }
 }
 

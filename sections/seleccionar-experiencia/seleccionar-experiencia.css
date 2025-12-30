@@ -179,6 +179,22 @@
     transform: scaleX(1);
 }
 
+/* Animación pulse para guiar al usuario */
+.experiencia-card.pulse-hint:not(.disabled):not(.selected) {
+    animation: cardPulse 2s ease-in-out infinite;
+}
+
+@keyframes cardPulse {
+    0%, 100% {
+        box-shadow: 0 5px 20px rgba(212, 165, 116, 0.2);
+        border-color: rgba(212, 165, 116, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 30px rgba(212, 165, 116, 0.4);
+        border-color: rgba(212, 165, 116, 0.5);
+    }
+}
+
 /* Experiencia deshabilitada */
 .experiencia-card.disabled {
     opacity: 0.5;
@@ -469,6 +485,37 @@
 .verificar-container {
     text-align: center;
     margin: var(--spacing-lg) 0;
+    position: relative;
+}
+
+.helper-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: rgba(212, 165, 116, 0.8);
+    font-family: var(--font-secondary);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.helper-message.hidden {
+    display: none;
+}
+
+.helper-arrow {
+    font-size: 18px;
+    animation: arrowBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
 }
 
 .btn-verificar {
@@ -496,6 +543,35 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
+    position: relative;
+}
+
+.btn-verificar:disabled:hover::after {
+    content: '↑ Primero seleccioná una experiencia';
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(212, 165, 116, 0.95);
+    color: #1a1a1a;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: tooltipFade 0.3s ease;
+    z-index: 10;
+}
+
+@keyframes tooltipFade {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 /* Sección de disponibilidad */
@@ -577,9 +653,12 @@
 .disponibilidad-mensaje {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     margin-top: var(--spacing-md);
     display: none;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .disponibilidad-mensaje.active {
@@ -696,7 +775,7 @@
 .resumen-reserva {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 10px;
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     margin: var(--spacing-md) 0;
 }
 
@@ -731,7 +810,7 @@
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     margin: var(--spacing-md) 0;
 }
 
@@ -743,11 +822,13 @@
 }
 
 .terminos-scroll {
-    max-height: 300px;
+    max-height: 350px;
     overflow-y: auto;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.7;
     margin-bottom: var(--spacing-sm);
     position: relative;
 }
@@ -816,7 +897,9 @@
 }
 
 .terminos-lista li {
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    font-size: 15px;
+    line-height: 1.7;
 }
 
 .terminos-lista strong {
