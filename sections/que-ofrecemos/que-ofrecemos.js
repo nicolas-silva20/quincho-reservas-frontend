@@ -3,7 +3,16 @@ const carouselImages = [
     'assets/images/carousel/image1.jpg',
     'assets/images/carousel/image2.jpg',
     'assets/images/carousel/image3.jpg',
-    'assets/images/carousel/image4.jpg'
+    'assets/images/carousel/image4.jpg',
+    'assets/images/carousel/image5.jpg',
+    'assets/images/carousel/image6.jpg',
+    'assets/images/carousel/image7.jpg',
+    'assets/images/carousel/image8.jpg',
+    'assets/images/carousel/image9.jpg',
+    'assets/images/carousel/image10.jpg',
+    'assets/images/carousel/image11.jpg',
+    'assets/images/carousel/image12.jpg',
+    'assets/images/carousel/image13.jpg'
 ];
 
 let currentSlide = 0;
