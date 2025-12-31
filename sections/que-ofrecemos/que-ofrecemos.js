@@ -8,7 +8,6 @@ const carouselImages = [
     'assets/images/carousel/image6.jpg',
     'assets/images/carousel/image7.jpg',
     'assets/images/carousel/image8.jpg',
-    'assets/images/carousel/image9.jpg',
     'assets/images/carousel/image10.jpg',
     'assets/images/carousel/image11.jpg',
     'assets/images/carousel/image12.jpg',
@@ -98,7 +97,7 @@ function goToSlide(index) {
 
 // Actualizar el carrusel
 function updateCarousel(track, dots) {
-    const slideWidth = track.querySelector('.carousel-slide').offsetWidth;
+    const slideWidth = 100; // Cada slide ocupa 100% del contenedor
     track.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
     
     // Actualizar dots

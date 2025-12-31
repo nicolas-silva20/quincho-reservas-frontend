@@ -1,21 +1,6 @@
 // Datos de las reseñas (se cargarán desde el backend)
-let resenasData = [
-    {
-        nombre: "EVAN LAHTI",
-        fecha: "October 18, 2018",
-        texto: '"One of my gaming highlights of the year."'
-    },
-    {
-        nombre: "JADA GRIFFIN",
-        fecha: "October 19, 2018",
-        texto: '"The next big thing in the world of streaming and survival games."'
-    },
-    {
-        nombre: "AARON WILLIAMS",
-        fecha: "October 24, 2018",
-        texto: '"Snoop Dogg Playing The Wildly Entertaining \'SOS\' Is Ridiculous."'
-    }
-];
+// Las reseñas de ejemplo en inglés solo se mostrarán si el backend no tiene datos
+let resenasData = [];
 
 // Cargar reseñas desde el backend
 async function cargarResenasDesdeAPI() {

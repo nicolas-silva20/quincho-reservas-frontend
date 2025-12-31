@@ -24,13 +24,27 @@
 }
 
 .logo {
-    height: 50px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo img {
-    height: 100%;
-    width: auto;
+    height: 150%;
+    width: 150%;
+    object-fit: cover;
     cursor: pointer;
+    filter: invert(1) brightness(1.2);
+    transition: transform var(--transition-fast);
+}
+
+.logo:hover img {
+    transform: scale(1.1);
 }
 
 .nav-menu {

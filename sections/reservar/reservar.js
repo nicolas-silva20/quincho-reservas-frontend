@@ -4,7 +4,7 @@ function renderReservar() {
     reservarSection.innerHTML = `
         <div class="reservar-container">
             <div class="reservar-image">
-                <img src="assets/images/reservar-bg.jpg" alt="Quincho El Umbral">
+                <img src="assets/images/reservar-frente.jpg" alt="Quincho El Umbral">
             </div>
             
             <div class="reservar-content">
