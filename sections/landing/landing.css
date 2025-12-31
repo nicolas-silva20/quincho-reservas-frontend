@@ -6,8 +6,16 @@
     justify-content: center;
     background-image: url('../../assets/images/hero-bg.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Fix para iOS Safari - background-attachment: fixed no funciona bien */
+@supports (-webkit-touch-callout: none) {
+    .landing-section {
+        background-attachment: scroll;
+    }
 }
 
 .hero-overlay {
