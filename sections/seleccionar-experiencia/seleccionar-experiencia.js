@@ -296,7 +296,7 @@ function renderSeleccionarExperiencia() {
                 <div class="disponibilidad-grid">
                     <div class="date-picker-container">
                         <label for="fecha-reserva">FECHA DEL EVENTO</label>
-                        <input type="date" id="fecha-reserva" class="date-input" onchange="verificarDisponibilidad()">
+                        <input type="date" id="fecha-reserva" class="date-input">
                     </div>
                     <div class="time-picker-container">
                         <label for="hora-reserva">TURNO</label>
@@ -648,9 +648,6 @@ async function verificarDisponibilidad() {
         return;
     }
     
-    // ⚠️ TESTING MODE: Descomentar línea de abajo para probar con Live Server (SOLO VISUAL)
-    // return mockVerificarDisponibilidad(mensajeDiv);
-    
     try {
         // Llamar al backend real - ahora devuelve ApiResponseDTO
         const response = await verificarDisponibilidadAPI(fecha, hora);
@@ -666,12 +663,6 @@ async function verificarDisponibilidad() {
         console.error('Error al verificar disponibilidad:', error);
         notifyError('Error al verificar disponibilidad. Por favor intente nuevamente.');
     }
-}
-
-// Función mock para testing visual (NO USAR EN PRODUCCIÓN)
-function mockVerificarDisponibilidad(mensajeDiv) {
-    mensajeDiv.classList.add('active');
-    mostrarFormularioConfirmacion();
 }
 
 // Mostrar formulario de confirmación

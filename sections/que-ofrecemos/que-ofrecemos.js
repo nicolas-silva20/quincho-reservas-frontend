@@ -119,15 +119,57 @@ function stopAutoplay() {
     clearInterval(autoplayInterval);
 }
 
-// Pausar autoplay al hacer hover
+// Variables para swipe táctil
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+
+// Detectar dirección del swipe
+function handleSwipe() {
+    const swipeThreshold = 50; // Mínimo de píxeles para considerar swipe
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+    
+    // Solo hacer swipe horizontal si el movimiento horizontal es mayor que el vertical
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+        if (diffX > 0) {
+            // Swipe hacia la derecha (imagen anterior)
+            moveCarousel(-1);
+        } else {
+            // Swipe hacia la izquierda (imagen siguiente)
+            moveCarousel(1);
+        }
+        stopAutoplay();
+        setTimeout(startAutoplay, 3000); // Reanudar autoplay después de 3 segundos
+    }
+}
+
+// Pausar autoplay al hacer hover y agregar soporte táctil
 document.addEventListener('DOMContentLoaded', () => {
     renderQueOfrecemos();
     startAutoplay();
     
     const carousel = document.querySelector('.carousel-container');
     if (carousel) {
+        // Eventos de mouse
         carousel.addEventListener('mouseenter', stopAutoplay);
         carousel.addEventListener('mouseleave', startAutoplay);
+        
+        // Eventos táctiles para swipe
+        const carouselWrapper = carousel.querySelector('.carousel-wrapper');
+        if (carouselWrapper) {
+            carouselWrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }, { passive: true });
+            
+            carouselWrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                handleSwipe();
+            }, { passive: true });
+        }
     }
 });
 
