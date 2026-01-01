@@ -320,17 +320,27 @@ function renderSeleccionarExperiencia() {
         fechaInput.setAttribute('min', hoy);
         
         // Fechas bloqueadas manualmente (formato YYYY-MM-DD)
+        // Agregar aquí fechas futuras que desees bloquear (feriados, vacaciones, mantenimiento)
         const fechasBloqueadas = [
-            '2025-12-31', // 31 de diciembre 2025
-            '2026-01-01'  // 1 de enero 2026
+            // Ejemplo: '2026-12-25' para Navidad
         ];
         
-        // Validar fecha seleccionada
-        fechaInput.addEventListener('input', function(e) {
+        // Validar fecha seleccionada - usar 'change' en lugar de 'input' para iOS
+        fechaInput.addEventListener('change', function(e) {
             const fechaSeleccionada = e.target.value;
             if (!fechaSeleccionada) return;
             
             const fecha = new Date(fechaSeleccionada + 'T12:00:00');
+            const fechaHoy = new Date();
+            fechaHoy.setHours(0, 0, 0, 0);
+            
+            // Validar que la fecha sea futura (evita problemas con fechas pasadas en iOS)
+            if (fecha < fechaHoy) {
+                notifyError('❌ No se pueden seleccionar fechas pasadas.');
+                e.target.value = '';
+                return;
+            }
+            
             const diaSemana = fecha.getDay(); // 0=Domingo, 1=Lunes, 6=Sábado
             
             // Validar si es lunes (día 1)
@@ -340,8 +350,8 @@ function renderSeleccionarExperiencia() {
                 return;
             }
             
-            // Validar si es una fecha bloqueada
-            if (fechasBloqueadas.includes(fechaSeleccionada)) {
+            // Validar si es una fecha bloqueada (solo si el array tiene elementos)
+            if (fechasBloqueadas.length > 0 && fechasBloqueadas.includes(fechaSeleccionada)) {
                 notifyError('❌ Esta fecha no está disponible. Por favor selecciona otra fecha.');
                 e.target.value = '';
                 return;
