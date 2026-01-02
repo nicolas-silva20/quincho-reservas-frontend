@@ -117,6 +117,13 @@
     font-weight: 600;
 }
 
+.resena-estrellas {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
 .resena-date {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.6);

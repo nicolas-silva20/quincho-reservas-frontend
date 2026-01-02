@@ -46,7 +46,8 @@ async function cargarResenasDesdeAPI() {
                 return {
                     nombre: resena.nombreCliente.toUpperCase(),
                     fecha: fechaFormateada,
-                    texto: `"${resena.comentario}"`
+                    texto: `"${resena.comentario}"`,
+                    calificacion: resena.calificacion || 5
                 };
             });
             
@@ -58,6 +59,12 @@ async function cargarResenasDesdeAPI() {
         console.log('🔙 Manteniendo reseñas de ejemplo');
         // Si falla, mantener datos de ejemplo
     }
+}
+
+// Función para generar estrellas
+function generarEstrellas(calificacion) {
+    const estrellas = '★'.repeat(calificacion) + '☆'.repeat(5 - calificacion);
+    return estrellas;
 }
 
 // Renderizar sección Reseñas
@@ -80,6 +87,7 @@ function renderResenas() {
                             <div class="resena-header">
                                 <div class="resena-info">
                                     <h4>${resena.nombre}</h4>
+                                    <div class="resena-estrellas">${generarEstrellas(resena.calificacion)}</div>
                                     <span class="resena-date">${resena.fecha}</span>
                                 </div>
                             </div>

@@ -1,0 +1,151 @@
+/* Botones Flotantes (Instagram y WhatsApp) */
+.floating-buttons-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.floating-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.floating-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+    filter: grayscale(100%);
+}
+
+/* Instagram Button */
+.floating-btn-instagram {
+    background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+}
+
+.floating-btn-instagram:hover {
+    background: linear-gradient(135deg, #4a4a4a, #2a2a2a);
+}
+
+/* WhatsApp Button */
+.floating-btn-whatsapp {
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+}
+
+.floating-btn-whatsapp:hover {
+    background: linear-gradient(135deg, #3a3a3a, #252525);
+}
+
+/* Tooltip */
+.floating-btn::before {
+    content: attr(aria-label);
+    position: absolute;
+    right: 70px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    white-space: nowrap;
+    font-size: 14px;
+    font-family: var(--font-secondary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.floating-btn:hover::before {
+    opacity: 1;
+}
+
+/* Pulse Animation - WhatsApp */
+@keyframes pulse-whatsapp {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+/* Pulse Animation - Instagram */
+@keyframes pulse-instagram {
+    0% {
+        box-shadow: 0 0 0 0 rgba(225, 48, 108, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(225, 48, 108, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(225, 48, 108, 0);
+    }
+}
+
+.floating-btn-whatsapp {
+    animation: pulse-whatsapp 2s infinite;
+}
+
+.floating-btn-instagram {
+    animation: pulse-instagram 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-buttons-container {
+        bottom: 20px;
+        right: 20px;
+        gap: 12px;
+    }
+
+    .floating-btn {
+        width: 55px;
+        height: 55px;
+    }
+
+    .floating-btn svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Hide tooltip on mobile */
+    .floating-btn::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-buttons-container {
+        bottom: 15px;
+        right: 15px;
+        gap: 10px;
+    }
+
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .floating-btn svg {
+        width: 26px;
+        height: 26px;
+    }
+}
