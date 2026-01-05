@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
             
             <!-- WhatsApp -->
-            <a href="https://wa.me/5492616584098?text=Hola!%20Estoy%20interesado%20en%20reservar%20el%20quincho" 
+            <a href="https://wa.me/5492616584098" 
                target="_blank" 
                rel="noopener noreferrer" 
                class="floating-btn floating-btn-whatsapp"
