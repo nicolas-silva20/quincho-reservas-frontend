@@ -410,9 +410,9 @@ function renderTablaPreciosHorarios() {
                         <tr>
                             <td class="horario-label">De 19:00 a 01:00</td>
                             <td class="precio-cell no-disponible">-</td>
-                            <td class="precio-cell">$340.000</td>
+                            <td class="precio-cell">$320.000</td>
+                            <td class="precio-cell">$360.000</td>
                             <td class="precio-cell">$380.000</td>
-                            <td class="precio-cell">$400.000</td>
                         </tr>
                     </tbody>
                 </table>
