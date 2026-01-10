@@ -13,7 +13,7 @@ const tablaPreciosHorarios = {
         '19:00-01:00': 360000
     },
     'sabado-domingo': {
-        '12:00-19:00': 400000,
+        '12:00-19:00': 380000,
         '19:00-01:00': 380000
     }
 };
@@ -405,7 +405,7 @@ function renderTablaPreciosHorarios() {
                             <td class="precio-cell">$280.000</td>
                             <td class="precio-cell">$300.000</td>
                             <td class="precio-cell">$340.000</td>
-                            <td class="precio-cell">$400.000</td>
+                            <td class="precio-cell">$380.000</td>
                         </tr>
                         <tr>
                             <td class="horario-label">De 19:00 a 01:00</td>
