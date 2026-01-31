@@ -1091,15 +1091,25 @@ async function aprobarResenaBtn(id) {
                 
                 if (response.success) {
                     notifySuccess('✅ Reseña aprobada exitosamente');
+                    
+                    // Si la respuesta incluye token de encuesta, guardarlo temporalmente
+                    const datosEncuesta = (response.data && response.data.encuestaToken) ? {
+                        token: response.data.encuestaToken,
+                        telefono: response.data.telefonoCliente,
+                        nombre: response.data.nombreCliente
+                    } : null;
+                    
                     verResenas(); // Recargar lista
                     
-                    // Si la respuesta incluye token de encuesta, mostrar popup
-                    if (response.data && response.data.encuestaToken) {
-                        mostrarLinkEncuesta(
-                            response.data.encuestaToken,
-                            response.data.telefonoCliente,
-                            response.data.nombreCliente
-                        );
+                    // Mostrar popup de encuesta DESPUÉS de actualizar la lista
+                    if (datosEncuesta) {
+                        setTimeout(() => {
+                            mostrarLinkEncuesta(
+                                datosEncuesta.token,
+                                datosEncuesta.telefono,
+                                datosEncuesta.nombre
+                            );
+                        }, 100);
                     }
                 } else {
                     notifyError('❌ Error al aprobar reseña');
@@ -1124,15 +1134,25 @@ async function rechazarResenaBtn(id) {
                 
                 if (response.success) {
                     notifySuccess('✅ Reseña rechazada exitosamente');
+                    
+                    // Si la respuesta incluye token de encuesta, guardarlo temporalmente
+                    const datosEncuesta = (response.data && response.data.encuestaToken) ? {
+                        token: response.data.encuestaToken,
+                        telefono: response.data.telefonoCliente,
+                        nombre: response.data.nombreCliente
+                    } : null;
+                    
                     verResenas(); // Recargar lista
                     
-                    // Si la respuesta incluye token de encuesta, mostrar popup
-                    if (response.data && response.data.encuestaToken) {
-                        mostrarLinkEncuesta(
-                            response.data.encuestaToken,
-                            response.data.telefonoCliente,
-                            response.data.nombreCliente
-                        );
+                    // Mostrar popup de encuesta DESPUÉS de actualizar la lista
+                    if (datosEncuesta) {
+                        setTimeout(() => {
+                            mostrarLinkEncuesta(
+                                datosEncuesta.token,
+                                datosEncuesta.telefono,
+                                datosEncuesta.nombre
+                            );
+                        }, 100);
                     }
                 } else {
                     notifyError('❌ Error al rechazar reseña');
@@ -1157,15 +1177,25 @@ async function eliminarResenaBtn(id) {
                 
                 if (response.success) {
                     notifySuccess('✅ Reseña eliminada exitosamente');
+                    
+                    // Si la respuesta incluye token de encuesta, guardarlo temporalmente
+                    const datosEncuesta = (response.data && response.data.encuestaToken) ? {
+                        token: response.data.encuestaToken,
+                        telefono: response.data.telefonoCliente,
+                        nombre: response.data.nombreCliente
+                    } : null;
+                    
                     verResenas(); // Recargar lista
                     
-                    // Si la respuesta incluye token de encuesta, mostrar popup
-                    if (response.data && response.data.encuestaToken) {
-                        mostrarLinkEncuesta(
-                            response.data.encuestaToken,
-                            response.data.telefonoCliente,
-                            response.data.nombreCliente
-                        );
+                    // Mostrar popup de encuesta DESPUÉS de actualizar la lista
+                    if (datosEncuesta) {
+                        setTimeout(() => {
+                            mostrarLinkEncuesta(
+                                datosEncuesta.token,
+                                datosEncuesta.telefono,
+                                datosEncuesta.nombre
+                            );
+                        }, 100);
                     }
                 } else {
                     notifyError('❌ Error al eliminar reseña');
