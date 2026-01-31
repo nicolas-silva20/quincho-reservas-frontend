@@ -558,21 +558,36 @@ function mostrarLinkEncuesta(token, telefono, nombreCliente) {
                 El cliente ya procesó su reseña. Ahora puedes enviarle la encuesta de satisfacción para obtener feedback detallado.
             </p>
             
-            <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; word-break: break-all;">
+            <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; word-break: break-all;">
+                <strong>Cliente:</strong> ${nombreCliente}<br>
+                <strong>Teléfono:</strong> ${telefono}<br><br>
                 <strong>Link:</strong><br>
-                <a href="${link}" target="_blank" style="color: #d4a574;">${link}</a>
+                <a href="${link}" target="_blank" style="color: #d4a574; text-decoration: underline;">${link}</a>
             </div>
             
-            <button class="btn-primary" onclick="copiarAlPortapapeles('${link}')" style="margin-right: 0.5rem;">
-                📋 Copiar Link
-            </button>
-            <button class="btn-primary" onclick="abrirWhatsAppEncuesta('${telefono}', '${token}', '${nombreCliente}')">
-                📱 Enviar por WhatsApp
-            </button>
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-primary" onclick="copiarAlPortapapeles('${link}')">
+                    📋 Copiar Link
+                </button>
+                <button class="btn-primary" onclick="abrirWhatsAppEncuesta('${telefono}', '${token}', '${nombreCliente}')">
+                    📱 Enviar por WhatsApp
+                </button>
+                <button class="btn-secondary" onclick="cerrarModalEncuesta()">
+                    ← Volver a Reseñas
+                </button>
+            </div>
         </div>
     `;
     
     document.getElementById('modal-detalle').style.display = 'flex';
+}
+
+/**
+ * Cerrar modal de encuesta y volver a lista de reseñas
+ */
+function cerrarModalEncuesta() {
+    document.getElementById('modal-detalle').style.display = 'none';
+    verResenas();
 }
 
 /**
@@ -1092,24 +1107,22 @@ async function aprobarResenaBtn(id) {
                 if (response.success) {
                     notifySuccess('✅ Reseña aprobada exitosamente');
                     
-                    // Si la respuesta incluye token de encuesta, guardarlo temporalmente
-                    const datosEncuesta = (response.data && response.data.encuestaToken) ? {
-                        token: response.data.encuestaToken,
-                        telefono: response.data.telefonoCliente,
-                        nombre: response.data.nombreCliente
-                    } : null;
-                    
-                    verResenas(); // Recargar lista
-                    
-                    // Mostrar popup de encuesta DESPUÉS de actualizar la lista
-                    if (datosEncuesta) {
+                    // Si la respuesta incluye token de encuesta, mostrar popup en lugar de refrescar lista
+                    if (response.data && response.data.encuestaToken) {
+                        // Cerrar modal de reseñas
+                        document.getElementById('modal-detalle').style.display = 'none';
+                        
+                        // Mostrar popup de encuesta después de un breve delay
                         setTimeout(() => {
                             mostrarLinkEncuesta(
-                                datosEncuesta.token,
-                                datosEncuesta.telefono,
-                                datosEncuesta.nombre
+                                response.data.encuestaToken,
+                                response.data.telefonoCliente,
+                                response.data.nombreCliente
                             );
-                        }, 100);
+                        }, 300);
+                    } else {
+                        // Si no hay encuesta, refrescar lista normalmente
+                        verResenas();
                     }
                 } else {
                     notifyError('❌ Error al aprobar reseña');
@@ -1135,24 +1148,22 @@ async function rechazarResenaBtn(id) {
                 if (response.success) {
                     notifySuccess('✅ Reseña rechazada exitosamente');
                     
-                    // Si la respuesta incluye token de encuesta, guardarlo temporalmente
-                    const datosEncuesta = (response.data && response.data.encuestaToken) ? {
-                        token: response.data.encuestaToken,
-                        telefono: response.data.telefonoCliente,
-                        nombre: response.data.nombreCliente
-                    } : null;
-                    
-                    verResenas(); // Recargar lista
-                    
-                    // Mostrar popup de encuesta DESPUÉS de actualizar la lista
-                    if (datosEncuesta) {
+                    // Si la respuesta incluye token de encuesta, mostrar popup en lugar de refrescar lista
+                    if (response.data && response.data.encuestaToken) {
+                        // Cerrar modal de reseñas
+                        document.getElementById('modal-detalle').style.display = 'none';
+                        
+                        // Mostrar popup de encuesta después de un breve delay
                         setTimeout(() => {
                             mostrarLinkEncuesta(
-                                datosEncuesta.token,
-                                datosEncuesta.telefono,
-                                datosEncuesta.nombre
+                                response.data.encuestaToken,
+                                response.data.telefonoCliente,
+                                response.data.nombreCliente
                             );
-                        }, 100);
+                        }, 300);
+                    } else {
+                        // Si no hay encuesta, refrescar lista normalmente
+                        verResenas();
                     }
                 } else {
                     notifyError('❌ Error al rechazar reseña');
@@ -1178,24 +1189,22 @@ async function eliminarResenaBtn(id) {
                 if (response.success) {
                     notifySuccess('✅ Reseña eliminada exitosamente');
                     
-                    // Si la respuesta incluye token de encuesta, guardarlo temporalmente
-                    const datosEncuesta = (response.data && response.data.encuestaToken) ? {
-                        token: response.data.encuestaToken,
-                        telefono: response.data.telefonoCliente,
-                        nombre: response.data.nombreCliente
-                    } : null;
-                    
-                    verResenas(); // Recargar lista
-                    
-                    // Mostrar popup de encuesta DESPUÉS de actualizar la lista
-                    if (datosEncuesta) {
+                    // Si la respuesta incluye token de encuesta, mostrar popup en lugar de refrescar lista
+                    if (response.data && response.data.encuestaToken) {
+                        // Cerrar modal de reseñas
+                        document.getElementById('modal-detalle').style.display = 'none';
+                        
+                        // Mostrar popup de encuesta después de un breve delay
                         setTimeout(() => {
                             mostrarLinkEncuesta(
-                                datosEncuesta.token,
-                                datosEncuesta.telefono,
-                                datosEncuesta.nombre
+                                response.data.encuestaToken,
+                                response.data.telefonoCliente,
+                                response.data.nombreCliente
                             );
-                        }, 100);
+                        }, 300);
+                    } else {
+                        // Si no hay encuesta, refrescar lista normalmente
+                        verResenas();
                     }
                 } else {
                     notifyError('❌ Error al eliminar reseña');
