@@ -1158,6 +1158,15 @@ async function eliminarResenaBtn(id) {
                 if (response.success) {
                     notifySuccess('✅ Reseña eliminada exitosamente');
                     verResenas(); // Recargar lista
+                    
+                    // Si la respuesta incluye token de encuesta, mostrar popup
+                    if (response.data && response.data.encuestaToken) {
+                        mostrarLinkEncuesta(
+                            response.data.encuestaToken,
+                            response.data.telefonoCliente,
+                            response.data.nombreCliente
+                        );
+                    }
                 } else {
                     notifyError('❌ Error al eliminar reseña');
                 }
