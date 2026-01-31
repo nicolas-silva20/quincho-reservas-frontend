@@ -1185,17 +1185,22 @@ async function eliminarResenaBtn(id) {
         async () => {
             try {
                 const response = await eliminarResena(id);
+                console.log('🔍 DEBUG eliminarResena - Response completa:', response);
+                console.log('🔍 DEBUG eliminarResena - response.data:', response.data);
+                console.log('🔍 DEBUG eliminarResena - encuestaToken:', response.data?.encuestaToken);
                 
                 if (response.success) {
                     notifySuccess('✅ Reseña eliminada exitosamente');
                     
                     // Si la respuesta incluye token de encuesta, mostrar popup en lugar de refrescar lista
                     if (response.data && response.data.encuestaToken) {
+                        console.log('✅ Token encontrado, cerrando modal y mostrando popup...');
                         // Cerrar modal de reseñas
                         document.getElementById('modal-detalle').style.display = 'none';
                         
                         // Mostrar popup de encuesta después de un breve delay
                         setTimeout(() => {
+                            console.log('⏰ Ejecutando mostrarLinkEncuesta...');
                             mostrarLinkEncuesta(
                                 response.data.encuestaToken,
                                 response.data.telefonoCliente,
@@ -1203,6 +1208,7 @@ async function eliminarResenaBtn(id) {
                             );
                         }, 300);
                     } else {
+                        console.log('⚠️ No hay token, refrescando lista...');
                         // Si no hay encuesta, refrescar lista normalmente
                         verResenas();
                     }
@@ -1210,7 +1216,7 @@ async function eliminarResenaBtn(id) {
                     notifyError('❌ Error al eliminar reseña');
                 }
             } catch (error) {
-                console.error('Error al eliminar reseña:', error);
+                console.error('❌ Error al eliminar reseña:', error);
                 notifyError('❌ Error al eliminar reseña');
             }
         }
