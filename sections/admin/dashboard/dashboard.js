@@ -544,6 +544,38 @@ function mostrarLinkResena(token, telefono, nombreCliente) {
 }
 
 /**
+ * Mostrar popup con link de encuesta de satisfacción
+ */
+function mostrarLinkEncuesta(token, telefono, nombreCliente) {
+    const link = `https://quinchoelumbral.netlify.app/encuesta-satisfaccion.html?token=${token}`;
+    
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = `
+        <div class="detalle-section" style="text-align: center;">
+            <h3 style="color: #d4a574; margin-bottom: 1rem;">📊 Link de Encuesta de Satisfacción</h3>
+            
+            <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                El cliente ya procesó su reseña. Ahora puedes enviarle la encuesta de satisfacción para obtener feedback detallado.
+            </p>
+            
+            <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; word-break: break-all;">
+                <strong>Link:</strong><br>
+                <a href="${link}" target="_blank" style="color: #d4a574;">${link}</a>
+            </div>
+            
+            <button class="btn-primary" onclick="copiarAlPortapapeles('${link}')" style="margin-right: 0.5rem;">
+                📋 Copiar Link
+            </button>
+            <button class="btn-primary" onclick="abrirWhatsAppEncuesta('${telefono}', '${token}', '${nombreCliente}')">
+                📱 Enviar por WhatsApp
+            </button>
+        </div>
+    `;
+    
+    document.getElementById('modal-detalle').style.display = 'flex';
+}
+
+/**
  * Cambiar estado de una reserva
  */
 async function cambiarEstado(id) {
@@ -1060,6 +1092,15 @@ async function aprobarResenaBtn(id) {
                 if (response.success) {
                     notifySuccess('✅ Reseña aprobada exitosamente');
                     verResenas(); // Recargar lista
+                    
+                    // Si la respuesta incluye token de encuesta, mostrar popup
+                    if (response.data && response.data.encuestaToken) {
+                        mostrarLinkEncuesta(
+                            response.data.encuestaToken,
+                            response.data.telefonoCliente,
+                            response.data.nombreCliente
+                        );
+                    }
                 } else {
                     notifyError('❌ Error al aprobar reseña');
                 }
@@ -1084,6 +1125,15 @@ async function rechazarResenaBtn(id) {
                 if (response.success) {
                     notifySuccess('✅ Reseña rechazada exitosamente');
                     verResenas(); // Recargar lista
+                    
+                    // Si la respuesta incluye token de encuesta, mostrar popup
+                    if (response.data && response.data.encuestaToken) {
+                        mostrarLinkEncuesta(
+                            response.data.encuestaToken,
+                            response.data.telefonoCliente,
+                            response.data.nombreCliente
+                        );
+                    }
                 } else {
                     notifyError('❌ Error al rechazar reseña');
                 }
@@ -1173,6 +1223,222 @@ async function marcarComoFinalizada(id) {
 }
 
 /**
+ * Ver y gestionar encuestas de satisfacción
+ */
+async function verEncuestas() {
+    try {
+        // Cargar encuestas y estadísticas en paralelo
+        const [encuestasResponse, estadisticasResponse] = await Promise.all([
+            obtenerTodasLasEncuestas(),
+            obtenerEstadisticasEncuestas()
+        ]);
+        
+        if (!encuestasResponse.success) {
+            notifyError('❌ Error al cargar encuestas');
+            return;
+        }
+
+        const encuestas = encuestasResponse.data || [];
+        const stats = estadisticasResponse.success ? estadisticasResponse.data : {};
+        
+        const modalBody = document.getElementById('modal-body');
+        modalBody.innerHTML = `
+            <div class="lista-section">
+                <h3>📊 Gestión de Encuestas de Satisfacción</h3>
+                
+                <!-- Estadísticas Generales -->
+                <div class="encuestas-estadisticas" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; border: 1px solid #d4a574;">
+                    <h4 style="color: #d4a574; margin-bottom: 1rem;">📈 Estadísticas Globales</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="background: rgba(212, 165, 116, 0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #999; margin-bottom: 0.5rem;">Total Encuestas</div>
+                            <div style="font-size: 2rem; color: #d4a574; font-weight: bold;">${stats.totalEncuestas || 0}</div>
+                        </div>
+                        <div style="background: rgba(212, 165, 116, 0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #999; margin-bottom: 0.5rem;">NPS Score</div>
+                            <div style="font-size: 2rem; color: ${(stats.npsScore || 0) >= 50 ? '#4caf50' : (stats.npsScore || 0) >= 0 ? '#ff9800' : '#f44336'}; font-weight: bold;">
+                                ${stats.npsScore !== undefined ? stats.npsScore.toFixed(1) : 'N/A'}
+                            </div>
+                        </div>
+                        <div style="background: rgba(212, 165, 116, 0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #999; margin-bottom: 0.5rem;">Satisfacción General</div>
+                            <div style="font-size: 2rem; color: #d4a574; font-weight: bold;">${stats.promedioSatisfaccionGeneral !== undefined ? stats.promedioSatisfaccionGeneral.toFixed(1) : 'N/A'}/5</div>
+                        </div>
+                        <div style="background: rgba(212, 165, 116, 0.1); padding: 1rem; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #999; margin-bottom: 0.5rem;">Recomendación</div>
+                            <div style="font-size: 2rem; color: #d4a574; font-weight: bold;">${stats.promedioRecomendaria !== undefined ? stats.promedioRecomendaria.toFixed(1) : 'N/A'}/5</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tabla de Encuestas -->
+                <table class="tabla-lista">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Satisfacción</th>
+                            <th>Recomendaría</th>
+                            <th>Volvería</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-encuestas-body">
+                        ${encuestas.length === 0 
+                            ? '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No hay encuestas disponibles</td></tr>'
+                            : encuestas.map(e => `
+                                <tr>
+                                    <td>#${e.id}</td>
+                                    <td>${e.nombreCliente || 'Anónimo'}</td>
+                                    <td>${formatearFecha(e.fechaRespuesta)}</td>
+                                    <td>${generarEscalaColor(e.satisfaccionGeneral)}</td>
+                                    <td>${generarEscalaColor(e.recomendaria)}</td>
+                                    <td>${generarEscalaColor(e.volveria)}</td>
+                                    <td>
+                                        <button class="btn-accion btn-ver" onclick="verDetalleEncuesta(${e.id})">👁️ Ver</button>
+                                    </td>
+                                </tr>
+                            `).join('')
+                        }
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        // Mostrar en el modal existente
+        const modal = document.getElementById('modal-detalle');
+        modal.style.display = 'flex';
+    } catch (error) {
+        console.error('Error al cargar encuestas:', error);
+        notifyError('❌ Error al cargar encuestas');
+    }
+}
+
+/**
+ * Ver detalle completo de una encuesta
+ */
+async function verDetalleEncuesta(id) {
+    try {
+        const response = await obtenerTodasLasEncuestas();
+        if (!response.success) {
+            notifyError('❌ Error al cargar detalle');
+            return;
+        }
+        
+        const encuesta = response.data.find(e => e.id === id);
+        if (!encuesta) {
+            notifyError('❌ Encuesta no encontrada');
+            return;
+        }
+        
+        const modalBody = document.getElementById('modal-body');
+        modalBody.innerHTML = `
+            <div class="detalle-encuesta" style="max-width: 700px; margin: 0 auto;">
+                <button class="btn-secondary" onclick="verEncuestas()" style="margin-bottom: 1rem;">← Volver a lista</button>
+                
+                <h3 style="color: #d4a574; margin-bottom: 1.5rem;">📊 Detalle de Encuesta #${encuesta.id}</h3>
+                
+                <!-- Info Cliente y Reserva -->
+                <div style="background: rgba(212, 165, 116, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <p><strong>Cliente:</strong> ${encuesta.nombreCliente || 'Anónimo'}</p>
+                    <p><strong>Teléfono:</strong> ${encuesta.telefonoCliente || 'N/A'}</p>
+                    <p><strong>Reserva ID:</strong> #${encuesta.reservaId || 'N/A'}</p>
+                    <p><strong>Fecha Respuesta:</strong> ${formatearFecha(encuesta.fechaRespuesta)}</p>
+                </div>
+                
+                <!-- Evaluación General -->
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #d4a574; margin-bottom: 1rem;">⭐ Evaluación General</h4>
+                    <div style="background: #1a1a1a; padding: 1rem; border-radius: 8px;">
+                        ${renderizarCampoEscala('Satisfacción General', encuesta.satisfaccionGeneral)}
+                        ${renderizarCampoEscala('Cumplió Expectativas', encuesta.cumplioExpectativas)}
+                        ${renderizarCampoEscala('Recomendaría El Umbral', encuesta.recomendaria)}
+                        ${renderizarCampoEscala('Volvería a Visitarnos', encuesta.volveria)}
+                    </div>
+                </div>
+                
+                <!-- Comentarios y Feedback -->
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #d4a574; margin-bottom: 1rem;">💬 Comentarios Detallados</h4>
+                    ${encuesta.porQueRecomendaria ? `
+                        <div style="background: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #d4a574;">¿Por qué recomendarías El Umbral?</strong>
+                            <p style="margin-top: 0.5rem; line-height: 1.6;">${encuesta.porQueRecomendaria}</p>
+                        </div>
+                    ` : ''}
+                    ${encuesta.queGusto ? `
+                        <div style="background: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #4caf50;">✅ ¿Qué fue lo que más te gustó?</strong>
+                            <p style="margin-top: 0.5rem; line-height: 1.6;">${encuesta.queGusto}</p>
+                        </div>
+                    ` : ''}
+                    ${encuesta.queMejorar ? `
+                        <div style="background: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #ff9800;">⚠️ ¿Qué podríamos mejorar?</strong>
+                            <p style="margin-top: 0.5rem; line-height: 1.6;">${encuesta.queMejorar}</p>
+                        </div>
+                    ` : ''}
+                    ${encuesta.queAgregar ? `
+                        <div style="background: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <strong style="color: #2196f3;">💡 ¿Qué te gustaría que agreguemos?</strong>
+                            <p style="margin-top: 0.5rem; line-height: 1.6;">${encuesta.queAgregar}</p>
+                        </div>
+                    ` : ''}
+                    ${!encuesta.porQueRecomendaria && !encuesta.queGusto && !encuesta.queMejorar && !encuesta.queAgregar ? 
+                        '<p style="color: #999; font-style: italic;">No se proporcionaron comentarios adicionales</p>' : ''
+                    }
+                </div>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Error al cargar detalle:', error);
+        notifyError('❌ Error al cargar detalle');
+    }
+}
+
+/**
+ * Renderizar campo de escala (1-5) con visualización
+ */
+function renderizarCampoEscala(label, valor) {
+    return `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(212, 165, 116, 0.2);">
+            <span style="color: #ccc;">${label}:</span>
+            <span>${generarEscalaColor(valor)}</span>
+        </div>
+    `;
+}
+
+/**
+ * Generar visualización de escala con color
+ */
+function generarEscalaColor(valor) {
+    if (!valor) return '<span style="color: #999;">N/A</span>';
+    
+    const colores = {
+        1: '#f44336',
+        2: '#ff9800',
+        3: '#ffc107',
+        4: '#8bc34a',
+        5: '#4caf50'
+    };
+    
+    const color = colores[valor] || '#999';
+    const circulos = [];
+    
+    for (let i = 1; i <= 5; i++) {
+        circulos.push(`<span style="color: ${i <= valor ? color : '#333'}; font-size: 1.2rem;">${i <= valor ? '●' : '○'}</span>`);
+    }
+    
+    return `
+        <div style="display: inline-flex; align-items: center; gap: 0.25rem;">
+            ${circulos.join('')}
+            <strong style="color: ${color}; margin-left: 0.5rem;">${valor}/5</strong>
+        </div>
+    `;
+}
+
+/**
  * Copiar texto al portapapeles
  */
 function copiarAlPortapapeles(texto) {
@@ -1194,6 +1460,24 @@ function abrirWhatsApp(telefono, token, nombreCliente) {
     
     // Mensaje personalizado
     const mensaje = `¡Hola ${nombreCliente}! Gracias por visitarnos en El Umbral del Quincho. 🎉\n\nNos encantaría conocer tu experiencia. Por favor, dejanos tu reseña en el siguiente link:\n\nhttps://quinchoelumbral.netlify.app/dejar-resena.html?token=${token}\n\n¡Esperamos verte pronto! 🌟`;
+    
+    // Codificar el mensaje para URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    
+    // Abrir WhatsApp
+    const whatsappLink = `https://wa.me/${telefonoLimpio}?text=${mensajeCodificado}`;
+    window.open(whatsappLink, '_blank');
+}
+
+/**
+ * Abrir WhatsApp con link de encuesta de satisfacción
+ */
+function abrirWhatsAppEncuesta(telefono, token, nombreCliente) {
+    // Eliminar caracteres no numéricos
+    const telefonoLimpio = telefono.replace(/\D/g, '');
+    
+    // Mensaje personalizado para encuesta
+    const mensaje = `¡Hola ${nombreCliente}! Gracias por tu reseña. 📊\n\nNos ayudarías mucho completando esta breve encuesta de satisfacción. Tu opinión es muy importante para seguir mejorando:\n\nhttps://quinchoelumbral.netlify.app/encuesta-satisfaccion.html?token=${token}\n\n¡Gracias por tu tiempo! 🌟`;
     
     // Codificar el mensaje para URL
     const mensajeCodificado = encodeURIComponent(mensaje);

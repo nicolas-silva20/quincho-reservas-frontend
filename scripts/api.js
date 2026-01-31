@@ -225,3 +225,28 @@ async function actualizarEstadoPagoReserva(id, nuevoEstadoPago) {
         requiresAuth: true
     });
 }
+
+// ===================================
+// ENCUESTAS DE SATISFACCIÓN
+// ===================================
+
+async function crearEncuesta(encuestaData) {
+    return await apiRequest('/encuestas/crear', {
+        method: 'POST',
+        body: JSON.stringify(encuestaData)
+    });
+}
+
+async function obtenerTodasLasEncuestas() {
+    return await apiRequest('/encuestas/todas', {
+        method: 'GET',
+        requiresAuth: true
+    });
+}
+
+async function obtenerEstadisticasEncuestas() {
+    return await apiRequest('/encuestas/estadisticas', {
+        method: 'GET',
+        requiresAuth: true
+    });
+}
