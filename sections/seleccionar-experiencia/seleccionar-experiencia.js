@@ -15,8 +15,43 @@ const tablaPreciosHorarios = {
     'sabado-domingo': {
         '12:00-19:00': 380000,
         '19:00-01:00': 380000
+    },
+    'feriado': { // Feriados tienen precio de fin de semana
+        '12:00-19:00': 380000,
+        '19:00-01:00': 380000
     }
 };
+
+// Feriados argentinos 2026 (formato YYYY-MM-DD)
+const feriadosArgentinos2026 = [
+    '2026-01-01', // Año Nuevo
+    '2026-02-16', // Carnaval - Lunes
+    '2026-02-17', // Carnaval - Martes
+    '2026-03-23', // Día no laborable turístico
+    '2026-03-24', // Día de la Memoria
+    '2026-04-02', // Veterano y Caídos en Malvinas
+    '2026-04-03', // Viernes Santo
+    '2026-05-01', // Día del Trabajo
+    '2026-05-25', // Revolución de Mayo
+    '2026-06-15', // Güemes (trasladado)
+    '2026-06-20', // Belgrano
+    '2026-07-09', // Independencia
+    '2026-07-10', // Día no laborable turístico
+    '2026-08-17', // San Martín (trasladado)
+    '2026-09-12', // Año Nuevo Judío
+    '2026-09-13', // Año Nuevo Judío
+    '2026-09-21', // Día del Perdón
+    '2026-10-12', // Día de la Raza
+    '2026-11-23', // Soberanía Nacional (trasladado)
+    '2026-12-07', // Día no laborable turístico
+    '2026-12-08', // Inmaculada Concepción
+    '2026-12-25'  // Navidad
+];
+
+// Función helper para verificar si una fecha es feriado
+function esFeriado(fecha) {
+    return feriadosArgentinos2026.includes(fecha);
+}
 
 // Datos de las experiencias
 const experienciasData = {
@@ -343,8 +378,8 @@ function renderSeleccionarExperiencia() {
             
             const diaSemana = fecha.getDay(); // 0=Domingo, 1=Lunes, 6=Sábado
             
-            // Validar si es lunes (día 1)
-            if (diaSemana === 1) {
+            // Validar si es lunes (día 1), excepto si es feriado
+            if (diaSemana === 1 && !esFeriado(fechaSeleccionada)) {
                 notifyError('❌ Lo sentimos, no alquilamos el lugar los lunes. Por favor selecciona otro día.');
                 e.target.value = '';
                 return;
@@ -397,6 +432,7 @@ function renderTablaPreciosHorarios() {
                             <th>JUEVES</th>
                             <th>VIERNES</th>
                             <th>SÁBADOS Y DOMINGOS</th>
+                            <th>FERIADOS Y FESTIVOS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -406,6 +442,7 @@ function renderTablaPreciosHorarios() {
                             <td class="precio-cell">$300.000</td>
                             <td class="precio-cell">$340.000</td>
                             <td class="precio-cell">$380.000</td>
+                            <td class="precio-cell">$380.000</td>
                         </tr>
                         <tr>
                             <td class="horario-label">De 19:00 a 01:00</td>
@@ -413,12 +450,14 @@ function renderTablaPreciosHorarios() {
                             <td class="precio-cell">$320.000</td>
                             <td class="precio-cell">$360.000</td>
                             <td class="precio-cell">$380.000</td>
+                            <td class="precio-cell">$380.000</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <p class="tabla-precios-scroll-hint">← Deslizá para ver más →</p>
             <p class="tabla-precios-nota">* Los precios son base. Los extras de la experiencia personalizada se suman al precio del horario seleccionado.</p>
+            <p class="tabla-precios-nota"><strong>🎉 Feriados y festivos tienen precio de fin de semana independientemente del día</strong></p>
         </div>
     `;
 }
@@ -429,6 +468,12 @@ function calcularPrecioBase(fecha, hora) {
     
     const fechaObj = new Date(fecha + 'T12:00:00');
     const diaSemana = fechaObj.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
+    
+    // Verificar si es feriado primero
+    if (esFeriado(fecha)) {
+        const horarioKey = hora === '12:00' ? '12:00-19:00' : '19:00-01:00';
+        return tablaPreciosHorarios['feriado'][horarioKey] || 0;
+    }
     
     let categoriasDia = '';
     if (diaSemana === 2 || diaSemana === 3) { // Martes o Miércoles
