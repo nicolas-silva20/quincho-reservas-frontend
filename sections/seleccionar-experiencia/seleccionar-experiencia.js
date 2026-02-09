@@ -1,16 +1,16 @@
 // Tabla de precios según día y horario
 const tablaPreciosHorarios = {
     'martes-miercoles': {
-        '12:00-19:00': 280000,
+        '12:00-19:00': 250000,
         '19:00-01:00': null // No disponible
     },
     'jueves': {
         '12:00-19:00': 300000,
-        '19:00-01:00': 320000
+        '19:00-01:00': 300000
     },
     'viernes': {
-        '12:00-19:00': 340000,
-        '19:00-01:00': 360000
+        '12:00-19:00': 300000,
+        '19:00-01:00': 300000
     },
     'sabado-domingo': {
         '12:00-19:00': 380000,
@@ -438,17 +438,17 @@ function renderTablaPreciosHorarios() {
                     <tbody>
                         <tr>
                             <td class="horario-label">De 12:00 a 19:00</td>
-                            <td class="precio-cell">$280.000</td>
+                            <td class="precio-cell">$250.000</td>
                             <td class="precio-cell">$300.000</td>
-                            <td class="precio-cell">$340.000</td>
+                            <td class="precio-cell">$300.000</td>
                             <td class="precio-cell">$380.000</td>
                             <td class="precio-cell">$380.000</td>
                         </tr>
                         <tr>
                             <td class="horario-label">De 19:00 a 01:00</td>
                             <td class="precio-cell no-disponible">-</td>
-                            <td class="precio-cell">$320.000</td>
-                            <td class="precio-cell">$360.000</td>
+                            <td class="precio-cell">$300.000</td>
+                            <td class="precio-cell">$300.000</td>
                             <td class="precio-cell">$380.000</td>
                             <td class="precio-cell">$380.000</td>
                         </tr>
