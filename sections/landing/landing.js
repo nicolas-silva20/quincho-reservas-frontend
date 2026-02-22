@@ -9,7 +9,7 @@ function renderLanding() {
                 Cruzá la puerta, descubrí un lugar mejor donde los instantes se convierten en recuerdos eternos
             </p>
             <button class="scroll-btn" onclick="scrollToSection('#about')">
-                <span>DESCENDER</span>
+                <span>CONOCER MÁS</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M8 1V15M8 15L1 8M8 15L15 8" stroke="currentColor" stroke-width="2"/>
                 </svg>

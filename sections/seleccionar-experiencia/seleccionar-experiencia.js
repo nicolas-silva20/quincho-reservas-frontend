@@ -311,10 +311,11 @@ function renderSeleccionarExperiencia() {
             <div class="experiencias-grid-wrapper">
                 <div class="experiencias-scroll-indicator-top"></div>
                 <div class="experiencias-grid" id="experiencias-grid">
-                    ${Object.entries(experienciasData).map(([key, exp]) => {
-                        const disabled = key === 'personalizada' || key === 'promocion';
-                        return renderExperienciaCard(key, exp, disabled);
-                    }).join('')}
+                    ${[
+                        ['promocion', experienciasData.promocion, false],
+                        ['estandar', experienciasData.estandar, false],
+                        ['personalizada', experienciasData.personalizada, true]
+                    ].map(([key, exp, disabled]) => renderExperienciaCard(key, exp, disabled)).join('')}
                 </div>
             </div>
             
@@ -465,6 +466,11 @@ function renderTablaPreciosHorarios() {
 // Calcular precio base según fecha y hora
 function calcularPrecioBase(fecha, hora) {
     if (!fecha || !hora) return 0;
+    
+    // Si la experiencia seleccionada es promoción, usar precio fijo
+    if (experienciaSeleccionada === 'promocion') {
+        return experienciasData.promocion.precioFijo;
+    }
     
     const fechaObj = new Date(fecha + 'T12:00:00');
     const diaSemana = fechaObj.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
