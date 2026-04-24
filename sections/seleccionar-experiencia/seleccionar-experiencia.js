@@ -311,8 +311,8 @@ function renderSeleccionarExperiencia() {
             <div class="experiencias-grid-wrapper">
                 <div class="experiencias-scroll-indicator-top"></div>
                 <div class="experiencias-grid" id="experiencias-grid">
-                    ${[
-                        ['promocion', experienciasData.promocion, false],
+                    ${[ 
+                        // ['promocion', experienciasData.promocion, false], // ← Descomentar para volver a mostrar la promoción
                         ['estandar', experienciasData.estandar, false],
                         ['personalizada', experienciasData.personalizada, true]
                     ].map(([key, exp, disabled]) => renderExperienciaCard(key, exp, disabled)).join('')}
