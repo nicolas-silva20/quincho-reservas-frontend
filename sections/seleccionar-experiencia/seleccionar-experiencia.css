@@ -129,10 +129,10 @@
 /* Columnas de experiencias */
 .experiencias-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* Cambiado de 3 a 2 columnas */
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
-    max-width: 1400px;
+    max-width: 900px; /* Ajuste opcional para mejor centrado */
     margin-left: auto;
     margin-right: auto;
 }
