@@ -1,24 +1,24 @@
 // Tabla de precios según día y horario
 const tablaPreciosHorarios = {
     'martes-miercoles': {
-        '12:00-19:00': 250000,
+        '12:00-19:00': 200000,
         '19:00-01:00': null // No disponible
     },
     'jueves': {
-        '12:00-19:00': 300000,
-        '19:00-01:00': 300000
+        '12:00-19:00': 200000,
+        '19:00-01:00': 200000
     },
     'viernes': {
-        '12:00-19:00': 300000,
-        '19:00-01:00': 300000
+        '12:00-19:00': 250000,
+        '19:00-01:00': 250000
     },
     'sabado-domingo': {
-        '12:00-19:00': 380000,
-        '19:00-01:00': 380000
+        '12:00-19:00': 250000,
+        '19:00-01:00': 250000
     },
     'feriado': { // Feriados tienen precio de fin de semana
-        '12:00-19:00': 380000,
-        '19:00-01:00': 380000
+        '12:00-19:00': 250000,
+        '19:00-01:00': 250000
     }
 };
 
@@ -374,6 +374,7 @@ function renderSeleccionarExperiencia() {
             if (fecha < fechaHoy) {
                 notifyError('❌ No se pueden seleccionar fechas pasadas.');
                 e.target.value = '';
+                actualizarOpcionesTurno(null);
                 return;
             }
             
@@ -383,6 +384,7 @@ function renderSeleccionarExperiencia() {
             if (diaSemana === 1 && !esFeriado(fechaSeleccionada)) {
                 notifyError('❌ Lo sentimos, no alquilamos el lugar los lunes. Por favor selecciona otro día.');
                 e.target.value = '';
+                actualizarOpcionesTurno(null);
                 return;
             }
             
@@ -390,8 +392,11 @@ function renderSeleccionarExperiencia() {
             if (fechasBloqueadas.length > 0 && fechasBloqueadas.includes(fechaSeleccionada)) {
                 notifyError('❌ Esta fecha no está disponible. Por favor selecciona otra fecha.');
                 e.target.value = '';
+                actualizarOpcionesTurno(null);
                 return;
             }
+
+            actualizarOpcionesTurno(fechaSeleccionada);
         });
     }
     
@@ -424,6 +429,7 @@ function renderTablaPreciosHorarios() {
     return `
         <div class="tabla-precios-container">
             <h2 class="tabla-precios-title">TARIFAS POR DÍA Y HORARIO</h2>
+            <div class="promo-invierno-badge">PROMO INVIERNO</div>
             <div class="tabla-precios-wrapper">
                 <table class="tabla-precios-horarios">
                     <thead>
@@ -439,27 +445,73 @@ function renderTablaPreciosHorarios() {
                     <tbody>
                         <tr>
                             <td class="horario-label">De 12:00 a 19:00</td>
-                            <td class="precio-cell">$250.000</td>
-                            <td class="precio-cell">$300.000</td>
-                            <td class="precio-cell">$300.000</td>
-                            <td class="precio-cell">$380.000</td>
-                            <td class="precio-cell">$380.000</td>
+                            <td class="precio-cell">${renderPrecioActualizado(250000, 200000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(300000, 200000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(300000, 250000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(380000, 250000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(380000, 250000)}</td>
                         </tr>
                         <tr>
                             <td class="horario-label">De 19:00 a 01:00</td>
                             <td class="precio-cell no-disponible">-</td>
-                            <td class="precio-cell">$300.000</td>
-                            <td class="precio-cell">$300.000</td>
-                            <td class="precio-cell">$380.000</td>
-                            <td class="precio-cell">$380.000</td>
+                            <td class="precio-cell">${renderPrecioActualizado(300000, 200000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(300000, 250000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(380000, 250000)}</td>
+                            <td class="precio-cell">${renderPrecioActualizado(380000, 250000)}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <p class="tabla-precios-scroll-hint">← Deslizá para ver más →</p>
-            <p class="tabla-precios-nota">* Los precios son base. Los extras de la experiencia personalizada se suman al precio del horario seleccionado.</p>
+            <p class="tabla-precios-nota">* Los precios tachados fueron reemplazados por la nueva promo de invierno. Los extras de la experiencia personalizada se suman al precio del horario seleccionado.</p>
             <p class="tabla-precios-nota"><strong>🎉 Feriados y festivos tienen precio de fin de semana independientemente del día</strong></p>
         </div>
+    `;
+}
+
+function renderPrecioActualizado(precioAnterior, precioNuevo) {
+    return `
+        <div class="precio-actualizado">
+            <span class="precio-anterior">$${precioAnterior.toLocaleString('es-AR')}</span>
+            <span class="precio-nuevo">$${precioNuevo.toLocaleString('es-AR')}</span>
+        </div>
+    `;
+}
+
+function actualizarOpcionesTurno(fechaSeleccionada) {
+    const horaSelect = document.getElementById('hora-reserva');
+    if (!horaSelect) return;
+
+    const opcionNoche = horaSelect.querySelector('option[value="19:00"]');
+    if (!opcionNoche) return;
+
+    if (!fechaSeleccionada) {
+        opcionNoche.disabled = false;
+        opcionNoche.hidden = false;
+        return;
+    }
+
+    const fecha = new Date(`${fechaSeleccionada}T12:00:00`);
+    const diaSemana = fecha.getDay();
+    const nocheBloqueada = diaSemana === 2 || diaSemana === 3;
+
+    opcionNoche.disabled = nocheBloqueada;
+    opcionNoche.hidden = nocheBloqueada;
+
+    if (nocheBloqueada && horaSelect.value === '19:00') {
+        horaSelect.value = '';
+        mensajeTemporal('Martes y miércoles solo están disponibles en el turno tarde (12:00 - 19:00).');
+    }
+}
+
+function mensajeTemporal(texto) {
+    const mensajeDiv = document.getElementById('mensaje-disponibilidad');
+    if (!mensajeDiv) return;
+
+    mensajeDiv.className = 'disponibilidad-mensaje active mensaje-no-disponible';
+    mensajeDiv.innerHTML = `
+        <div class="mensaje-icon">✗</div>
+        <p class="mensaje-text">${texto}</p>
     `;
 }
 
@@ -706,6 +758,13 @@ async function verificarDisponibilidad() {
     
     if (!fecha || !hora) {
         mensajeDiv.classList.remove('active');
+        return;
+    }
+
+    const fechaObj = new Date(`${fecha}T12:00:00`);
+    const diaSemana = fechaObj.getDay();
+    if ((diaSemana === 2 || diaSemana === 3) && hora === '19:00') {
+        mensajeTemporal('Martes y miércoles solo están disponibles en el turno tarde (12:00 - 19:00).');
         return;
     }
     

@@ -73,8 +73,32 @@
     font-family: var(--font-primary);
 }
 
+.promo-invierno-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-md);
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.18), rgba(76, 175, 80, 0.18));
+    border: 1px solid rgba(212, 165, 116, 0.45);
+    color: var(--color-primary);
+    font-family: var(--font-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.tabla-precios-wrapper {
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+}
+
 .tabla-precios-horarios {
     width: 100%;
+    min-width: 920px;
     border-collapse: collapse;
     margin-bottom: 1rem;
 }
@@ -92,10 +116,11 @@
 }
 
 .tabla-precios-horarios tbody td {
-    padding: 0.875rem;
+    padding: 0.875rem 0.75rem;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
     font-family: var(--font-secondary);
+    vertical-align: middle;
 }
 
 .tabla-precios-horarios .horario-label {
@@ -104,17 +129,42 @@
     font-weight: 600;
     text-align: left;
     padding-left: 1.5rem;
+    min-width: 180px;
 }
 
 .tabla-precios-horarios .precio-cell {
     color: #4caf50;
     font-weight: 700;
     font-size: 16px;
+    min-width: 150px;
 }
 
 .tabla-precios-horarios .precio-cell.no-disponible {
     color: rgba(255, 255, 255, 0.3);
     font-size: 20px;
+}
+
+.precio-actualizado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.precio-anterior {
+    color: rgba(255, 255, 255, 0.42);
+    text-decoration: line-through;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.precio-nuevo {
+    color: #4caf50;
+    font-size: 16px;
+    font-weight: 800;
+    margin-left: auto;
 }
 
 .tabla-precios-nota {
@@ -124,6 +174,72 @@
     font-family: var(--font-secondary);
     font-style: italic;
     margin: 0;
+}
+
+@media (max-width: 768px) {
+    .tabla-precios-container {
+        padding: var(--spacing-sm);
+    }
+
+    .tabla-precios-title {
+        font-size: 20px;
+    }
+
+    .promo-invierno-badge {
+        margin-bottom: var(--spacing-sm);
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+
+    .tabla-precios-horarios {
+        min-width: 860px;
+    }
+
+    .tabla-precios-horarios thead th,
+    .tabla-precios-horarios tbody td {
+        padding: 0.75rem 0.6rem;
+        font-size: 13px;
+    }
+
+    .tabla-precios-horarios .horario-label {
+        min-width: 160px;
+        padding-left: 1rem;
+    }
+
+    .tabla-precios-horarios .precio-cell {
+        min-width: 135px;
+    }
+
+    .precio-actualizado {
+        gap: 0.5rem;
+    }
+
+    .precio-anterior {
+        font-size: 12px;
+    }
+
+    .precio-nuevo {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabla-precios-container {
+        padding: 0.8rem;
+    }
+
+    .tabla-precios-wrapper {
+        margin-inline: -0.25rem;
+    }
+
+    .tabla-precios-horarios {
+        min-width: 820px;
+    }
+
+    .tabla-precios-nota {
+        font-size: 12px;
+        line-height: 1.5;
+    }
 }
 
 /* Columnas de experiencias */
