@@ -429,7 +429,10 @@ function renderTablaPreciosHorarios() {
     return `
         <div class="tabla-precios-container">
             <h2 class="tabla-precios-title">TARIFAS POR DÍA Y HORARIO</h2>
-            <div class="promo-badge">PROMO VERANO</div>
+            <div class="promo-header">
+                <div class="promo-badge">PROMO VERANO</div>
+                <p class="promo-mensaje">☀️ <strong>¡Precios congelados!</strong> Este verano mantenemos las mismas tarifas de la temporada pasada, para que disfrutes sin sorpresas.</p>
+            </div>
             <div class="tabla-precios-wrapper">
                 <table class="tabla-precios-horarios">
                     <thead>

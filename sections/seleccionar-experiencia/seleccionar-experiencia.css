@@ -91,6 +91,37 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
+.promo-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.promo-header .promo-badge {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.promo-mensaje {
+    margin: 0;
+    padding: 8px 16px;
+    border-left: 3px solid var(--color-primary);
+    border-radius: 0 8px 8px 0;
+    background: rgba(212, 165, 116, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-secondary);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.promo-mensaje strong {
+    color: var(--color-primary);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
 .tabla-precios-wrapper {
     overflow-x: auto;
     padding-bottom: 0.25rem;
@@ -189,6 +220,15 @@
         margin-bottom: var(--spacing-sm);
         font-size: 11px;
         letter-spacing: 1.5px;
+    }
+
+    .promo-header {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .promo-mensaje {
+        font-size: 13px;
+        padding: 6px 12px;
     }
 
     .tabla-precios-horarios {
